@@ -5,75 +5,85 @@
 #include <chrono>
 #include <ctime>
 #include <string>
-#include <map>
 
+extern struct Booking;
 const size_t NTIMES = 48;
-const char *DATA_FILE = "registration_data.txt";
 
 class List {
 	public:
-		List(string room){};
-		void load();
+		List();
+		List(size_t times[NTIMES],std::string names[NTIMES]){};
+		~List(){};
 		size_t rotate();
-		bool isFull(time_t t);
-		size_t getSpace(time_t t);
-		bool reserve(time_t t, size_t nPeople);
-		void store();
+		bool isFull(size_t t);
+		bool reserve(Booking b);
+		//void dump(std::ostream &s);
 	private:
 		struct Node{
-			size_t	people;
-			std::map<std::string,std::string> names;
-			Node 	*next;
+			size_t		people;
+			std::string  names[NTIMES];
+			Node 		*next;
 		};
 		Node *head;
 }
 
-List::List(size_t times[NTIMES],std::vector< std::map<std::string,std::string> > names){
+List::List(){
+	head = new Node{0,std::map<std::string,std::string>,nullptr};
+	for(int i = 1;i < NTIMES;i++){
+		
+	}
+}
+List::List(size_t times[NTIMES],std::string names[NTIMES]){
+	head = new Node;
 	head->people = times[0];
-	//head->names = 
-	//for(size_t i = 0;i < 
-/*	std::time_t t = std::time(0);
-	std::tm *now = std::localtime(&t);
-	start_time = t;
-	ifstream data;
-	data.open(DATA_FILE);
-	string line;
-	while(std::cin >> line){
-		if(!line.substr(6,room.length()).compare(room)){
-			break;
-		}
+	head->names = names[0];
+	Node *curr = head;
+	for(size_t i = 1;i < NTIMES;i++){
+		Node *newNode = new Node{times[i],names[i],nullptr};
+		curr->next = newNode;
+		curr = curr->next;
 	}
-	if(!line){
-		std::cout << "Error finding study room\n";
-		exit(1);
+}
+List::~List(){
+	Node *prev = head;
+	Node *curr = head;
+	while(curr != nullptr){
+		prev = curr;
+		curr = curr->next;
+		delete prev;
+	}	
+}
+size_t List::rotate(){
+	Node *popped = head;
+	head = head->next;
+	size_t people = popped->people;
+	delete popped;
+	Node *curr = head;
+	while(curr->next != nullptr)
+		curr = curr->next;
+	curr->next = new Node{0,std::map<std::string,std::string>,nullptr};
+	return peopl;
+}
+bool isFull(Booking b){
+	Node *curr = head;
+	for(size_t i = 0;i < b->s_time;i++){
+		if(!curr->next) return true;
+		curr = curr->next;
 	}
-	size_t pos = 0;
-	std::string delim = ";";
-
-	// Delete space entry
-	pos = line.find(delim);
-	s.erase(0, pos+delim.length());
-
-	// Get day entry
-	pos = line.find(delim);
-	size_t oldDay = (size_t) stoi(s.substr(4,pos));
-	s.erase(0, pos+delim.length());
-
-	// Get hour entry
-	pos = line.find(delim);
-	size_t oldHour = (size_t) stoi(s.substr(5,pos));
-	s.erase(0, pos+delim.length());
-
-	// Get capacity
-	pos = line.find(delim);
-	size_t capacity =(size_t) stoi(s.substr(9,pos));
-	s.erase(0, pos+delim.length());
-
-	// Figure out difference in time
-	if(oldDay > start_time.mt_mday){ // If we changed month or day.
-	time_t old_time;
-	
-	size_t diff_hours = 
-
-	// Get reservations*/
+	for(size_t i = 0;i < b->book_len;i++){
+		if(!curr->next || curr->people+b->num_people > b->capacity) return true;
+		curr = curr->next;
+	}
+	return false;
+}
+bool reserve(Booking b){
+	if(!isFull(b)){
+		Node *curr = head;
+		for(size_t i = 0;i < b->s_time;i++)
+			curr = curr->next;
+		for(size_t i = 0;i < b->book_len;i++)
+			curr->people += b->num_people;
+		return true;
+	}
+	return false;
 }
