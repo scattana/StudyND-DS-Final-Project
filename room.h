@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <stdexcept>
 
-extern class timeTable; //Update this as needed based on Michael's code
+extern class List; //Update this as needed based on Michael's code
 
 class Room{
     public:
@@ -22,7 +22,7 @@ class Room{
 
         std::string roomNum; //Data elements
         size_t capacity;
-        timeTable times;
+        List times;
 
         bool book(size_t, size_t); //Booking function
 };
@@ -31,14 +31,14 @@ class Room{
 Room::Room() { //Default constructor
     roomNum = "9 3/4";
     capacity = 42;
-    timeTable temp(); times = temp;    
+    List temp(); times = temp;    
 }
 
 
 Room::Room(std::string name, size_t holding) { //Custom constructor
     roomNum = name;
     capacity = holding;
-    timeTable temp(); times = temp;
+    List temp(); times = temp;
 } 
 
 

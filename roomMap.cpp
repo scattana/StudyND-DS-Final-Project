@@ -37,13 +37,13 @@ RoomMap::~RoomMap(){
 }
 
 //Custom booking function- handles insertion as needed as well as booking
-bool RoomMap::book(const std::string &key, const size_t &max, const size_t &time, const size_t &nPeople) {
-    if(search(key) == NONE) {
-        room NewRoom(key, max);
+bool RoomMap::book(const Booking &entry) {
+    if(search(entry.location) == NONE) {
+        Room NewRoom(entry.location, entry.capacity);
         insert(NewRoom);
     }
 
-    return table[search(key)].book(time, nPeople);    
+    return table[search(entry.location)].reserve(entry);    
 }
 
 //Pre-written insert function
