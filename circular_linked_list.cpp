@@ -17,30 +17,31 @@ class List {
 		size_t rotate();
 		bool isFull(size_t t);
 		bool reserve(Booking b);
-		//void dump(std::ostream &s);
+		void dump(std::ostream &s);
 	private:
 		struct Node{
-			size_t		people;
-			std::string  names[NTIMES];
-			Node 		*next;
+			size_t			people;
+			std::string		names;
+			Node 			*next;
 		};
 		Node *head;
 }
 
 List::List(){
-	head = new Node{0,std::map<std::string,std::string>,nullptr};
+	head = new Node{0,"",nullptr};
+	Node *curr = head;
 	for(int i = 1;i < NTIMES;i++){
-		
+		Node *temp = new Node{0,"",nullptr};
+		curr->next = temp;
+		curr = curr->next;
 	}
 }
 List::List(size_t times[NTIMES],std::string names[NTIMES]){
-	head = new Node;
-	head->people = times[0];
-	head->names = names[0];
+	head = new Node{times[0],names[0],head};
 	Node *curr = head;
 	for(size_t i = 1;i < NTIMES;i++){
-		Node *newNode = new Node{times[i],names[i],nullptr};
-		curr->next = newNode;
+		Node *temp = new Node{times[i],names[i],nullptr};
+		curr->next = temp;
 		curr = curr->next;
 	}
 }
@@ -86,4 +87,9 @@ bool reserve(Booking b){
 		return true;
 	}
 	return false;
+}
+void dump(std::ostream &os){
+	for(Node *t = head;t != nullptr;t=t->next){
+		os >> t->people >> std::endl;
+	}
 }
