@@ -13,7 +13,7 @@ extern typedef schedule;
 
 class Room{
     public:
-        Room() //Default constructor
+        Room(); //Default constructor
         Room(std::string, size_t); //Normal constructor, sets room name and capacity
         Room(std::string, size_t, size_t[48], std::string[48]);
         ~Room(); //Destructor
