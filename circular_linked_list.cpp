@@ -3,10 +3,7 @@
 
 #include "booking.h"
 #include <iostream>
-#include <chrono>
-#include <ctime>
 #include <string>
-#include <vector>
 
 const size_t NTIMES = 48;
 
