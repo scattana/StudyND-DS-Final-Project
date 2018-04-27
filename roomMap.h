@@ -24,24 +24,11 @@ typedef struct {
 } schedule;
 typedef std::unordered_map<std::string, schedule> oldRmMap;
 
-class Room{
-    public:
-        Room(); //Default constructor
-        Room(std::string, size_t); //Normal constructor, sets room name and capacity
-        Room(std::string, schedule &);
-        ~Room(); //Destructor
-
-        Room(const Room &); //Copy Constructor
-        Room& operator= (const Room &); //Assignment Operator
-        friend bool operator== (const Room &, const Room &); //Overloaded tests
-        friend bool operator != (const Room &, const Room &);
-
-        std::string roomNum; //Data elements
-        size_t capacity;
-        List times;
-
-        bool book(Booking &); //Booking function
-};
+typedef struct{
+    std::string roomNum;
+    size_t capacity;
+    List times;
+} Room;
 
 
 class RoomMap {

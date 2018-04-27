@@ -273,6 +273,7 @@ string returnRoom(size_t n, string temp){
 	}
 	// after while loop runs, read one more line to get correct location:
 	getline(ifs, temp2);
+	ifs.close();
 	return temp2;
 }
 
@@ -295,6 +296,7 @@ size_t get_capacity(string temp, size_t loc){
 		counter++;
 	}
 	getline(ifs, name);		// temp will now hold correct capacity
+	ifs.close();
 	return (size_t)(stoi(name));
 }
 
@@ -311,6 +313,7 @@ void receipt(Booking b){
 	out << "Number of people: " << b.num_people << endl;
 	out << "Location capacity: " << b.capacity << endl;
 	out << "\n" << endl;
+	out.close();
 }
 
 
@@ -320,7 +323,7 @@ void receipt(Booking b){
 
 int main(int argc, char* argv[]){
 	// FIRST STEP: load booking data (current reservation schedule)
-	RoomMap myMap;
+	//RoomMap *myMap =  new RoomMap;
 	
 	// -----------------------------------------
 	// now parse command line options
@@ -344,11 +347,13 @@ int main(int argc, char* argv[]){
 
 		// map to RoomMap hash table (already defined from state load)
 		
-		
 
 		// print "receipt" of booking to text file in current directory
 		receipt(b);
 	}
+
+	
+	//delete myMap;
 
 	return EXIT_SUCCESS;
 }

@@ -12,43 +12,6 @@
 
 //Room Object Methods:
 
-Room::Room() { //Default constructor
-    roomNum = "9 3/4";
-    capacity = 42;
-    List temp; times = temp;    
-}
-
-
-Room::Room(std::string name, size_t holding) { //Custom constructor
-    roomNum = name;
-    capacity = holding;
-    List temp; times = temp;
-} 
-
-Room::Room(std::string name, schedule &oldIn){
-    roomNum = name;
-    capacity = oldIn.cap;
-    List temp(oldIn.times, oldIn.names);
-    times = temp;
-}
-
-Room::~Room(){ //Destructor, modify this as necessary
-    //delete &times;
-}
-
-
-Room::Room(const Room &r2){ //Copy constructor
-    *this = r2;
-}
-
-
-Room& Room::operator= (const Room &r2){ //Overloaded assignment operator
-    this->roomNum = r2.roomNum;
-    this->capacity = r2.capacity;
-    this->times = r2.times;
-}
-
-
 bool operator== (const Room &r1, const Room &r2) { //Overloaded comparison operator
     if(r1.roomNum != r2.roomNum || r1.capacity != r2.capacity) {
         return false;
@@ -56,19 +19,12 @@ bool operator== (const Room &r1, const Room &r2) { //Overloaded comparison opera
     else return true;
 }
 
-
 bool operator != (const Room &r1, const Room &r2) { //Overloaded comparison operator
     return !(r1 == r2);
 }
 
-
-bool Room::book(Booking &b){ //Booking function calls Michael's
-    return times.reserve(&b); //Check syntax on this!!!!!
-}
-
-
 // Methods --------------------------------------------------------------------
-const Room NONE;
+const Room NONE{"9 3/4", 42};
 
 // default constructor (use DEFAULT values)
 RoomMap::RoomMap(){
@@ -97,24 +53,26 @@ RoomMap::RoomMap(oldRmMap oldMap){
     resize(DEFAULT_TABLE_SIZE);
     
     for(auto it = oldMap.begin(); it != oldMap.end(); it++){
-        Room NewRoom(it->first, it->second);
+        Room NewRoom{it->first, it->second.cap, List(it->second.times, it->second.names)};
         insert(NewRoom);
     }
 }
 
 // deconstructor
 RoomMap::~RoomMap(){
+    std::cout << "We're deleting this memory\n";
     delete[] table;
 }
 
 //Custom booking function- handles insertion as needed as well as booking
 bool RoomMap::book(Booking &entry) {
     if(search(entry.location) == NONE) {
-        Room NewRoom(entry.location, entry.capacity);
+        Room NewRoom{entry.location, entry.capacity};
         insert(NewRoom);
     }
 
-    return table[locate(entry.location)].book(entry);    
+    return table[locate(entry.location)].times.reserve(&entry);
+    //return table[locate(entry.location)].book(entry);    
 }
 
 //Pre-written insert function
@@ -191,7 +149,7 @@ void RoomMap::resize(const size_t new_size) {
     for(size_t i=0; i<old_size; i++){
 	if(old_table[i] != NONE) insert(old_table[i]);
     }
-    //delete[] old_table;
+    if(old_table) delete[] old_table;
 }
 
 // vim: set sts=4 sw=4 ts=8 expandtab ft=cpp:
