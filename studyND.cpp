@@ -16,21 +16,22 @@
 #include <cerrno>
 #include <cstring>
 #include "roomMap.cpp"
-#include "booking.h"
+//#include "booking.h"
 using namespace std;
 
 
 // utility function prototypes
-string lower_str(string);
-void printBooking(Booking);
-void printRooms(string temp);
-string returnRoom(size_t n, string temp);
-string formatTime(size_t);
-//void system(unordered_map<string, RoomMap>&);
-void system(unordered_map<string, Booking>&);
-size_t get_hour();
-size_t get_capacity(string, size_t);
-void receipt(Booking);
+void printBuildings();							// from file loc in Public
+Booking newBooking(size_t);						// makes&returns new booking
+string lower_str(string);						// returns lowercase string
+void printBooking(Booking);						// prints formatted booking
+void printRooms(string temp);					// prints rooms in spec bldg
+string returnRoom(size_t n, string temp);		// from numeric identifier
+string formatTime(size_t);						// in 12-hour format
+void system(unordered_map<string, Booking>&);	// reservation system w/HM
+size_t get_hour();								// from system_clock
+size_t get_capacity(string, size_t);			// from spec. bldg, room
+void receipt(Booking);							// outputs booking->txt file
 
 
 // Opens and prints list of currently-supported buildings in our database
@@ -159,6 +160,9 @@ Booking newBooking(size_t current_hour){
 	return booking;
 }
 
+
+// Usage function - called when "-h" command line option is set
+// or with improper usage
 void usage(string progname, int status){
 	cout << "\n-----------------------------------------------" << endl;
 	cout << "Usage: " << progname << " [OPTIONS]\n\n\t";
