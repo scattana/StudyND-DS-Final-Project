@@ -143,15 +143,15 @@ Booking newBooking(size_t current_hour){
 	cout << "\nThank you! Here are the details for your booking:\n" << endl;
 	printBooking(booking);
 	cout << "\nWould you like to confirm your booking? (y/n) ";
-	char c;
-	cin >> c;
-	while(!(tolower(c)=='y' || tolower(c)=='n')){
-		cout << "Please type either 'y' or 'n' or type \"q\" to exit: ";
-		cin >> c;
-		if(tolower(c)=='q') exit(0);
+	string c;
+	getline(cin, c);
+	while(!(lower_str(c)=="y" || lower_str(c)=="n")){
+		cout << "\nPlease type either 'y' or 'n' or type \"q\" to exit: ";
+		getline(cin, c);
+		if(lower_str(c)=="q") exit(0);
 	}
 
-	if(tolower(c)=='n'){
+	if(lower_str(c)=="n"){
 		cout << "\nYour booking was not confirmed. Leaving studyND\n" << endl;
 		exit(0);
 	}
@@ -320,7 +320,8 @@ void receipt(Booking b){
 
 int main(int argc, char* argv[]){
 	// FIRST STEP: load booking data (current reservation schedule)
-	RoomMap myMap;
+	//RoomMap myMap;
+	unordered_map<string, RoomMap> myMap;
 	
 	// -----------------------------------------
 	// now parse command line options
@@ -342,9 +343,19 @@ int main(int argc, char* argv[]){
 	if(booked){
 		Booking b = newBooking(hour);
 
-		// map to RoomMap hash table (already defined from state load)
-		
-		
+		// try to add new <building, RoomMap> entry to the unordered_map
+		// if the key already exists, call "book" function on the building
+		// and pass Booking object. If the key doesn't exist, map "building"
+		// to a new RoomMap object, then call "book" with the booking object
+		auto found = myMap.find(b.building);
+		if(found== myMap.end()){		// key was not found
+			RoomMap r;
+			myMap.insert(pair<string, RoomMap>(b.building, r));
+			// TODO: CALL "book"
+		}
+		else{							// key was found
+			// TODO: CALL "book"
+		}
 
 		// print "receipt" of booking to text file in current directory
 		receipt(b);
