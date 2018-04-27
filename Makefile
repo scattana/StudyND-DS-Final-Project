@@ -4,13 +4,18 @@ TARGETS=		studyND
 
 all: 			studyND
 
-studyND:		studyND.o roomMap.o circular_linked_list.p
-	@$(CC) $^ -o $@
+studyND:		studyND.cpp
+	@echo Compiling $@...
+	@$(CC) $(CFLAGS) $^ -o $@
 
 
-%.o:			%.cpp
+roomMap.o:			roomMap.cpp
 	@echo Compiling $@...
 	@$(CC) $(CFLAGS) -c $^ -o $@
 	
+circular_linked_list.o:		circular_linked_list.cpp
+	@echo Compiling $@...
+	@$(CC) $(CFLAGS) -c $^ -o $@
+
 clean:
 	rm *.o studyND

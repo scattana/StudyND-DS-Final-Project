@@ -1,15 +1,22 @@
 // room.h: Implementation of a "room" class / object
 
+#pragma once
 #include <iostream>
 #include <string>
 #include <functional>
 #include <utility>
 #include <unistd.h>
 #include <stdexcept>
+#include "circular_linked_list.cpp"
 
-extern class List; //Update this as needed based on Michael's code
-extern typedef schedule;
+//extern class List; //Update this as needed based on Michael's code
 
+typedef struct {
+        size_t times[48];
+        std::string names[48];
+        size_t cap;
+} schedule;
+typedef std::unordered_map<std::string, schedule> oldRmMap;
 
 class Room{
     public:

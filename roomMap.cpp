@@ -7,10 +7,11 @@
 #include <unistd.h>
 #include <stdexcept>
 
-#include "room.h"
+//#include "room.h"
 #include "roomMap.h"
 
 // Methods --------------------------------------------------------------------
+const Room NONE; //Definition?
 
 // default constructor (use DEFAULT values)
 RoomMap::RoomMap(){
@@ -31,7 +32,7 @@ RoomMap::RoomMap(size_t t_size, double l_factor){
 }
 
 
-RoomMap::RoomMap(oldRmMp &oldMap){
+RoomMap::RoomMap(oldRmMap oldMap){
     table_size = 0;
     max_load_factor = DEFAULT_LOAD_FACTOR;
     num_items = 0;
@@ -50,13 +51,13 @@ RoomMap::~RoomMap(){
 }
 
 //Custom booking function- handles insertion as needed as well as booking
-bool RoomMap::book(const Booking &entry) {
+bool RoomMap::book(Booking &entry) {
     if(search(entry.location) == NONE) {
         Room NewRoom(entry.location, entry.capacity);
         insert(NewRoom);
     }
 
-    return table[search(entry.location)].reserve(entry);    
+    return table[locate(entry.location)].book(entry);    
 }
 
 //Pre-written insert function
@@ -70,7 +71,7 @@ void RoomMap::insert(const Room &input) {
     if(bucket == table_size){
 	resize(table_size*2); // if no empty buckets found
     }
-    else if (table[bucket].roomNum != key){
+    else if (table[bucket].roomNum != input.roomNum){
 	num_items++; // increment the number of UNIQUE items in the table
     }
     table[bucket] = input;
@@ -90,7 +91,7 @@ const Room RoomMap::search(const std::string &key) {
 void RoomMap::dump(std::ostream &os) {
     for(size_t i=0; i<table_size; i++){
 	if(table[i] != NONE){
-            os << table[i].first << std::endl; //Modify this to dump table info as well?
+            os << table[i].roomNum << std::endl; //Modify this to dump table info as well?
             /*
 	    switch(flag){
 		case DUMP_KEY:	     os << table[i].first << std::endl; break;
@@ -131,7 +132,7 @@ void RoomMap::resize(const size_t new_size) {
     table_size = new_size;
     // copy old values from table to new table
     for(size_t i=0; i<old_size; i++){
-	if(old_table[i] != NONE) insert(old_table[i].first, old_table[i].second);
+	if(old_table[i] != NONE) insert(old_table[i]);
     }
     delete[] old_table;
 }
