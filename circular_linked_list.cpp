@@ -47,18 +47,14 @@ List::List(size_t times[NTIMES],std::string names[NTIMES]){
 	}
 }
 List::~List(){
-	/*Node *prev = head;
+	Node *prev = head;
 	Node *curr = head;
 	while(curr != nullptr){
 		prev = curr;
 		curr = curr->next;
 		delete prev;
-	}*/
-/*	std::vector < Node * > v;
-    for (auto curr = head; curr != nullptr; curr = curr->next)
-        v.push_back(curr);
-    for(size_t i = 0; i < v.size();i++) delete v[i];	
-*/}
+	}
+}
 size_t List::rotate(){
 	Node *popped = head;
 	head = head->next;
