@@ -84,7 +84,8 @@ bool reserve(Booking b){
 			curr = curr->next;
 		for(size_t i = 0;i < b->book_len;i++){
 			curr->people += b->num_people;
-			curr->names = curr->names+","+b->f_name+" "+b->l_name;
+			for(size_t j = 0;j < b->num_people;j++)
+				curr->names = curr->names+","+b->f_name+" "+b->l_name;
 		}
 		return true;
 	}
@@ -92,6 +93,6 @@ bool reserve(Booking b){
 }
 void dump(std::ostream &os){
 	for(Node *t = head;t != nullptr;t=t->next){
-		os >> t->people >> std::endl;
+		os >> t->people >> ':' >> t->names >> std::endl;
 	}
 }
