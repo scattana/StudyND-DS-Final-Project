@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <cerrno>
 #include <cstring>
-//#include "roomMap.h"
+#include "roomMap.h"
 using namespace std;
 
 // "Booking" struct (each "booking" contains the data for one "study reservation"
@@ -41,6 +41,8 @@ string formatTime(size_t);
 //void system(unordered_map<string, RoomMap>&);
 void system(unordered_map<string, Booking>&);
 size_t get_hour();
+size_t get_capacity(string, size_t);
+void receipt(Booking);
 
 
 // Opens and prints list of currently-supported buildings in our database
@@ -119,6 +121,9 @@ Booking newBooking(size_t current_hour){
 	string rm = returnRoom(num, lower_str(temp));
 	booking.location = lower_str(rm);
 
+	// Get and assign capacity from room location to Booking struct
+	booking.capacity = get_capacity(booking.building, num);
+
 	// Get and store time of reservation
 	cout << "\nThe current hour is: " << formatTime(get_hour()) << endl;
 	cout << "\nHow many hours in advance would you look to book (0-48)?\n";
@@ -156,6 +161,7 @@ Booking newBooking(size_t current_hour){
 		cin >> c;
 		if(tolower(c)=='q') exit(0);
 	}
+
 	if(tolower(c)=='n'){
 		cout << "\nYour booking was not confirmed. Leaving studyND\n" << endl;
 		exit(0);
@@ -193,6 +199,7 @@ void printBooking(Booking b){
 	cout << "\tLocation: " << b.building << " " << b.location << endl;
 	cout << "\tTime: " << formatTime(b.s_time) << " to " << formatTime(b.e_time) << endl;
 	cout << "\tNumber of people: " << b.num_people << endl;
+	cout << "\tCapacity of room: " << b.capacity << endl;
 }
 
 // Utility function to format time output
@@ -277,6 +284,43 @@ string returnRoom(size_t n, string temp){
 	return temp2;
 }
 
+// Utility function to return capacity of specified room from file
+size_t get_capacity(string temp, size_t loc){
+	// open file
+	ifstream ifs;
+	if(temp=="cushing") ifs.open("/afs/nd.edu/user24/scattana/Public/cushing.txt", ifstream::in);
+	else if(temp=="fitzpatrick") ifs.open("/afs/nd.edu/user24/scattana/Public/fitzpatrick.txt", ifstream::in);
+	else if(temp=="duncan student center") ifs.open("/afs/nd.edu/user24/scattana/Public/duncan.txt", ifstream::in); 
+	else if(temp=="stinson-remick") ifs.open("/afs/nd.edu/user24/scattana/Public/stinson.txt", ifstream::in);
+	else{
+		cout << "Building " << temp << " was not found. Leaving studyND" << endl;
+		exit(EXIT_FAILURE);
+	}
+	string name;
+	size_t counter = 1;
+	while(counter != loc*2){
+		getline(ifs, name);
+		counter++;
+	}
+	getline(ifs, name);		// temp will now hold correct capacity
+	return (size_t)(stoi(name));
+}
+
+
+// Utility function to "print" a receipt of a booking to a text file
+// in the user's current directory
+void receipt(Booking b){
+	ofstream out("studyND-booking-info.txt");
+	out << "YOUR studyND BOOKING MADE AT HOUR: " << formatTime(get_hour()) << endl;
+	out << "-------------------------------------------" << endl;
+	out << "Name: " << b.f_name << " " << b.l_name << endl;
+	out << "Location: " << b.building << " " << b.location << endl;
+	out << "Time: " << formatTime(b.s_time) << " to " << formatTime(b.e_time) << endl;
+	out << "Number of people: " << b.num_people << endl;
+	out << "Location capacity: " << b.capacity << endl;
+	out << "\n" << endl;
+}
+
 
 // -----------------------------------------------
 //               MAIN FUNCTION
@@ -300,16 +344,13 @@ int main(int argc, char* argv[]){
 	// if a booking is desired, make booking and output to file:
 	if(booked){
 		Booking b = newBooking(hour);
-		ofstream out("studyND-booking-info.txt");
-		out << "YOUR studyND BOOKING MADE AT HOUR: " << formatTime(get_hour()) << endl;
-		out << "-------------------------------------------" << endl;
-		out << "Name: " << b.f_name << " " << b.l_name << endl;
-		out << "Location: " << b.building << " " << b.location << endl;
-		out << "Time: " << formatTime(b.s_time) << " to " << formatTime(b.e_time) << endl;
-		out << "Number of people: " << b.num_people << endl;
-		out << "\n" << endl;
+
+		// map to RoomMap hash table
+		RoomMap myMap;
+
+		// print "receipt" of booking to text file in current directory
+		receipt(b);
 	}
 
 	return EXIT_SUCCESS;
 }
-
