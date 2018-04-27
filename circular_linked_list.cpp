@@ -82,8 +82,10 @@ bool reserve(Booking b){
 		Node *curr = head;
 		for(size_t i = 0;i < b->s_time;i++)
 			curr = curr->next;
-		for(size_t i = 0;i < b->book_len;i++)
+		for(size_t i = 0;i < b->book_len;i++){
 			curr->people += b->num_people;
+			curr->names = curr->names+","+b->f_name+" "+b->l_name;
+		}
 		return true;
 	}
 	return false;
