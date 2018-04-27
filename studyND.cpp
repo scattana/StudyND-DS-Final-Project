@@ -16,8 +16,10 @@
 #include <cerrno>
 #include <cstring>
 #include "roomMap.h"
+#include "booking.h"
 using namespace std;
 
+/*
 // "Booking" struct (each "booking" contains the data for one "study reservation"
 struct Booking{
 	string building;		// building name
@@ -30,7 +32,7 @@ struct Booking{
 	size_t e_time;			// end time of booking (assigned after input)
 	size_t capacity;		// the room's capacity, assigned after input
 };
-
+*/
 
 // utility function prototypes
 string lower_str(string);
