@@ -15,32 +15,37 @@
 #include <stdio.h>
 #include <cerrno>
 #include <cstring>
+//#include "roomMap.h"
 using namespace std;
 
 // "Booking" struct (each "booking" contains the data for one "study reservation"
 struct Booking{
-	string building;
-	string location;
-	string f_name;
-	string l_name;
-	int num_people;
-	int s_time;
-	int e_time;
-	int capacity;
+	string building;		// building name
+	string location;		// space identifier within building (i.e. room)
+	string f_name;			// first name
+	string l_name;			// last name
+	size_t num_people;		// number of people included in the booking
+	size_t s_time;			// start time of booking (hour 0 = now)
+	size_t book_len;		// duration in hours of booking (1-47)
+	size_t e_time;			// end time of booking (assigned after input)
+	size_t capacity;		// the room's capacity, assigned after input
 };
 
 
 // utility function prototypes
 string lower_str(string);
 void printBooking(Booking);
-string formatTime(int);
+void printRooms(string temp);
+string returnRoom(size_t n, string temp);
+string formatTime(size_t);
+//void system(unordered_map<string, RoomMap>&);
 void system(unordered_map<string, Booking>&);
-
+size_t get_hour();
 
 
 // Opens and prints list of currently-supported buildings in our database
 void printBuildings(){
-	const char *file_path = "./buildings.txt";
+	const char *file_path = "/afs/nd.edu/user24/scattana/Public/buildings.txt";
 	FILE *buildings;
 	buildings = fopen(file_path,"r");
 	// If file doesn't open, return errror message and exit w/failure
@@ -52,15 +57,17 @@ void printBuildings(){
 	char temp[BUFSIZ];
 	cout << endl;		// blank line for formatting purposes
 	while(fgets(temp, BUFSIZ, buildings)) printf("\t%s", temp);
+	cout << endl;		// formatting
 	fclose(buildings);
 }
 
 // Makes and returns a new Booking based on user input
-Booking newBooking(){
+Booking newBooking(size_t current_hour){
 	string temp;
 	// do-while loop prints instructions once, and repeats while "view" is specified
 	do{
 		cout << "\nWelcome to the studyND study space manager\n";
+		cout << "The current hour is: " << formatTime(get_hour()) << endl;
 		cout << "To make a new booking, please enter BUILDING NAME:\n";
 		cout << "\t-to view a list of currently-supported buildings, type \"view\"\n";
 		cout << "\t-to exit, type \"exit\"\n";
@@ -68,12 +75,12 @@ Booking newBooking(){
 		if(lower_str(temp)=="view") printBuildings();
 		if(lower_str(temp)=="exit") exit(0);
 	}
-	while(temp=="view" || temp=="View" || temp=="VIEW");
+	while(lower_str(temp)=="view");
 
 	// Make list of buildings from file and store as unordered_set for fast retreival
 	unordered_set<string> mySet;
 	FILE *buildings;
-	const char *file_path = "./buildings.txt";
+	const char *file_path = "/afs/nd.edu/user24/scattana/Public/buildings.txt";
 	buildings = fopen(file_path,"r");
 	if(!buildings){
 		fprintf(stderr, "Could not open file %s: %s\n", file_path, strerror(errno));
@@ -103,18 +110,25 @@ Booking newBooking(){
 	booking.building = lower_str(temp);
 
 	// Now, get and find space location within a particular building:
-	cout << "\nPlease enter the location within " << temp << ":\n";
-	getline(cin, temp);
-	booking.location = temp;
+	cout << "\nSpace locations available in " << lower_str(temp) << ":\n";
+	printRooms(lower_str(temp));
+	cout << "\nPlease enter the number (below) of the space location you wish to reserve:\n";
+	//getline(cin, temp);
+	size_t num;
+	cin >> num;
+	string rm = returnRoom(num, lower_str(temp));
+	booking.location = lower_str(rm);
 
 	// Get and store time of reservation
-	cout << "\nPlease enter a start time for your reservation:\n";
-	cout << "Enter a time in hour increments and using military (24-hour) time,\n";
-	cin >> booking.s_time;		// get start time
-	cout << "\nPlease enter an end time for your reservation:\n";
-	cout << "Enter a time in hour increments and using military (24-hour) time,\n";
-	cout << "(end time must be on the same day as your start time)" << endl;
-	cin >> booking.e_time;		// get end time
+	cout << "\nThe current hour is: " << formatTime(get_hour()) << endl;
+	cout << "\nHow many hours in advance would you look to book (0-48)?\n";
+	cout << "(enter a time in hour increments; '0' = NOW)\n";
+	cin >> booking.s_time;			// get start time
+	booking.s_time += get_hour();	// add to current hour
+	cout << "\nHow many hours would you like your booking to last?\n";
+	cout << "(enter in hour increments)\n";
+	cin >> booking.book_len	;		// get end time
+	booking.e_time = booking.s_time + booking.book_len;		// assign e_time
 
 
 	// get and store first name
@@ -132,7 +146,7 @@ Booking newBooking(){
 	cin >> booking.num_people;
 
 	// confirm booking
-	cout << "Thank you! Here are the details for your booking:\n" << endl;
+	cout << "\nThank you! Here are the details for your booking:\n" << endl;
 	printBooking(booking);
 	cout << "\nWould you like to confirm your booking? (y/n) ";
 	char c;
@@ -164,21 +178,6 @@ void usage(string progname, int status){
 }
 
 
-int main(int argc, char* argv[]){
-	// parse command line options
-	bool manual = true;
-	if(argc == 1) usage(argv[0], 1);
-	if(strcmp(argv[1],"-h")==0) usage(argv[0], 0);
-	int argind = 1;
-	for(argind; argind < argc; argind++){
-		// -n option means make new reservation
-		if(strcmp(argv[argind], "-n")==0) Booking myBooking = newBooking();
-		else if(strcmp(argv[argind], "-v")==0) cout << "CALL viewBookings()" << endl;
-		else usage(argv[0], 1);	// improper usage; call "usage" with status 1
-	}
-	return EXIT_SUCCESS;
-}
-
 
 // Utility function "lower_str" returns lowercase copy of string parameter
 string lower_str(string x){
@@ -197,7 +196,7 @@ void printBooking(Booking b){
 }
 
 // Utility function to format time output
-string formatTime(int t){
+string formatTime(size_t t){
 	string mod;
 	if((int)t / 12 == 0) mod = "AM";
 	else mod = "PM";
@@ -213,3 +212,104 @@ string formatTime(int t){
 void system(unordered_map<string, Booking> &booking){
 	
 }
+
+// Utility function that gets the current time using system_clock (C++11)
+// and returns a size_t corresponding to the current hour
+size_t get_hour(){
+ 	chrono::duration<int,ratio<60*60*24>> one_day (1);
+    chrono::system_clock::time_point today = chrono::system_clock::now();
+    time_t tt = chrono::system_clock::to_time_t (today);
+    const char hr[2] = {ctime(&tt)[11], ctime(&tt)[12]};
+    return (size_t)stoi(hr);
+}
+
+// Utility function to print the rooms and capacities for a specified building
+void printRooms(string temp){
+	cout << endl;		// formatting
+	// open file
+	ifstream ifs;
+	if(temp=="cushing") ifs.open("/afs/nd.edu/user24/scattana/Public/cushing.txt", ifstream::in);
+	else if(temp=="fitzpatrick") ifs.open("/afs/nd.edu/user24/scattana/Public/fitzpatrick.txt", 
+	ifstream::in);
+	else if(temp=="duncan student center") ifs.open("/afs/nd.edu/user24/scattana/Public/duncan.txt", ifstream::in);
+	else if(temp=="stinson-remick") ifs.open("/afs/nd.edu/user24/scattana/Public/stinson.txt", ifstream::in);
+	else{
+		cout << "Building " << temp << " was not found. Leaving studyND" << endl;
+		exit(EXIT_FAILURE);
+	}
+	string loc, cap;
+	int rmNum = 1;
+	cout << "\tNumber\tLocation:\t\t\tCapacity" << endl;
+	cout << "\t------\t--------\t\t\t--------" << endl;
+	while(getline(ifs, loc)){
+		if(loc != "")
+			cout << "\t" << rmNum << "\t" << loc;
+		getline(ifs, cap);
+		cout << "\t\t" << cap << "\n";
+		rmNum++;
+	}
+	// close the file
+	ifs.close();
+}
+
+// Utility function to return the space location name for a specified space
+// location identifier (number)
+string returnRoom(size_t n, string temp){
+	// open file
+	ifstream ifs;
+	if(temp=="cushing") ifs.open("/afs/nd.edu/user24/scattana/Public/cushing.txt", ifstream::in);
+	else if(temp=="fitzpatrick") ifs.open("/afs/nd.edu/user24/scattana/Public/fitzpatrick.txt", ifstream::in);
+	else if(temp=="duncan student center") ifs.open("/afs/nd.edu/user24/scattana/Public/duncan.txt", ifstream::in); 
+	else if(temp=="stinson-remick") ifs.open("/afs/nd.edu/user24/scattana/Public/stinson.txt", ifstream::in);
+	else{
+		cout << "Building " << temp << " was not found. Leaving studyND" << endl;
+		exit(EXIT_FAILURE);
+	}
+	string temp2;
+	int count = 1;
+	while(count < n){
+		getline(ifs, temp2);	// get and discard location name
+		getline(ifs, temp2); 	// get and discard capacity
+		count++;				// increment to next line
+	}
+	// after while loop runs, read one more line to get correct location:
+	getline(ifs, temp2);
+	return temp2;
+}
+
+
+// -----------------------------------------------
+//               MAIN FUNCTION
+// -----------------------------------------------
+
+int main(int argc, char* argv[]){
+	size_t hour;
+	bool booked = false;
+	// parse command line options
+	if(argc == 1) usage(argv[0], 1);
+	if(strcmp(argv[1],"-h")==0) usage(argv[0], 0);
+	int argind = 1;
+	for(argind; argind < argc; argind++){
+		// -n option means make new reservation
+		if(strcmp(argv[argind], "-n")==0){
+			booked = true;
+		}
+		else if(strcmp(argv[argind], "-v")==0) cout << "CALL viewBookings()" << endl;
+		else usage(argv[0], 1);	// improper usage; call "usage" with status 1
+	}
+	// if a booking is desired, make booking and output to file:
+	if(booked){
+		Booking b = newBooking(hour);
+		ofstream out("studyND-booking-info.txt");
+		out << "YOUR studyND BOOKING MADE AT HOUR: " << formatTime(get_hour()) << endl;
+		out << "-------------------------------------------" << endl;
+		out << "Name: " << b.f_name << " " << b.l_name << endl;
+		out << "Location: " << b.building << " " << b.location << endl;
+		out << "Time: " << formatTime(b.s_time) << " to " << formatTime(b.e_time) << endl;
+		out << "Number of people: " << b.num_people << endl;
+		out << "\n" << endl;
+	}
+
+	return EXIT_SUCCESS;
+}
+
