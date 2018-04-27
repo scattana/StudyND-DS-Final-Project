@@ -11,6 +11,12 @@
 #include "room.h"
 
 typedef std::hash<std::string>  StringHasher;
+typedef struct {
+        size_t times[48];
+        std::string names[48];
+        size_t cap;
+} schedule;
+typedef std::unordered_map<std::string, schedule> oldRmMap;
 
 const double DEFAULT_LOAD_FACTOR = 0.6; //extern?
 const size_t DEFAULT_TABLE_SIZE = 20; //extern?
@@ -22,6 +28,7 @@ class RoomMap {
 public:
         RoomMap();                                      // default constructor
         RoomMap(size_t, double);        		// constructor
+        RoomMap(oldRmMap &);                            // .txt initialization constructor
         ~RoomMap();                                     // destructor
 
         bool book(const Booking &entry); //Function to book a time in a room; calls insert as needed.

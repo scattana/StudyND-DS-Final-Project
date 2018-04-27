@@ -2,11 +2,15 @@ CC=				g++
 CFLAGS=			-std=c++11
 TARGETS=		studyND
 
+all: 			studyND
+
+studyND:		studyND.o roomMap.o circular_linked_list.p
+	@$(CC) $^ -o $@
 
 
-studyND:		studyND.cpp
-	@echo Compiling studyND program...
-	@$(CC) $(CFLAGS) $< -o $@
+%.o:			%.cpp
+	@echo Compiling $@...
+	@$(CC) $(CFLAGS) -c $^ -o $@
 	
 clean:
-	rm studyND
+	rm *.o studyND
