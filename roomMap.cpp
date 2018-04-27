@@ -10,8 +10,65 @@
 //#include "room.h"
 #include "roomMap.h"
 
+//Room Object Methods:
+
+Room::Room() { //Default constructor
+    roomNum = "9 3/4";
+    capacity = 42;
+    List temp; times = temp;    
+}
+
+
+Room::Room(std::string name, size_t holding) { //Custom constructor
+    roomNum = name;
+    capacity = holding;
+    List temp; times = temp;
+} 
+
+Room::Room(std::string name, schedule &oldIn){
+    roomNum = name;
+    capacity = oldIn.cap;
+    List temp(oldIn.times, oldIn.names);
+    times = temp;
+}
+
+Room::~Room(){ //Destructor, modify this as necessary
+    //delete &times;
+}
+
+
+Room::Room(const Room &r2){ //Copy constructor
+    *this = r2;
+}
+
+
+Room& Room::operator= (const Room &r2){ //Overloaded assignment operator
+    this->roomNum = r2.roomNum;
+    this->capacity = r2.capacity;
+    this->times = r2.times;
+}
+
+
+bool operator== (const Room &r1, const Room &r2) { //Overloaded comparison operator
+    if(r1.roomNum != r2.roomNum || r1.capacity != r2.capacity) {
+        return false;
+    }
+    else return true;
+}
+
+
+bool operator != (const Room &r1, const Room &r2) { //Overloaded comparison operator
+    return !(r1 == r2);
+}
+
+
+bool Room::book(Booking &b){ //Booking function calls Michael's
+    return times.reserve(&b); //Check syntax on this!!!!!
+}
+
+
 // Methods --------------------------------------------------------------------
-const Room NONE; //Definition?
+const Room NONE;
 
 // default constructor (use DEFAULT values)
 RoomMap::RoomMap(){
@@ -47,7 +104,7 @@ RoomMap::RoomMap(oldRmMap oldMap){
 
 // deconstructor
 RoomMap::~RoomMap(){
-    //delete[] table;
+    delete[] table;
 }
 
 //Custom booking function- handles insertion as needed as well as booking
@@ -134,7 +191,7 @@ void RoomMap::resize(const size_t new_size) {
     for(size_t i=0; i<old_size; i++){
 	if(old_table[i] != NONE) insert(old_table[i]);
     }
-    delete[] old_table;
+    //delete[] old_table;
 }
 
 // vim: set sts=4 sw=4 ts=8 expandtab ft=cpp:
