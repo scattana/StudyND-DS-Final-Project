@@ -31,6 +31,19 @@ RoomMap::RoomMap(size_t t_size, double l_factor){
 }
 
 
+RoomMap::RoomMap(oldRmMp &oldMap){
+    table_size = 0;
+    max_load_factor = DEFAULT_LOAD_FACTOR;
+    num_items = 0;
+    table = nullptr;
+    resize(DEFAULT_TABLE_SIZE);
+    
+    for(auto it = oldMap.begin(); it != oldMap.end(); it++){
+        Room NewRoom(it->first, it->second);
+        insert(NewRoom);
+    }
+}
+
 // deconstructor
 RoomMap::~RoomMap(){
     delete[] table;

@@ -8,11 +8,14 @@
 #include <stdexcept>
 
 extern class List; //Update this as needed based on Michael's code
+extern typedef schedule;
+
 
 class Room{
     public:
         Room() //Default constructor
         Room(std::string, size_t); //Normal constructor, sets room name and capacity
+        Room(std::string, size_t, size_t[48], std::string[48]);
         ~Room(); //Destructor
 
         Room(const Room &); //Copy Constructor
@@ -41,6 +44,12 @@ Room::Room(std::string name, size_t holding) { //Custom constructor
     List temp(); times = temp;
 } 
 
+Room::Room(std::string name, schedule &oldIn){
+    roomNum = name;
+    capacity = oldIn.cap;
+    List temp(oldIn.times, oldIn.names);
+    times = temp;
+}
 
 Room::~Room(){ //Destructor, modify this as necessary
     delete timeTable;
