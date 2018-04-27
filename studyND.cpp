@@ -16,7 +16,7 @@
 #include <cerrno>
 #include <cstring>
 #include "roomMap.cpp"
-#include "booking.h"
+//#include "booking.h"
 using namespace std;
 
 
@@ -316,7 +316,7 @@ void receipt(Booking b){
 
 int main(int argc, char* argv[]){
 	// FIRST STEP: load booking data (current reservation schedule)
-	RoomMap myMap;
+	//RoomMap myMap;
 	
 	// -----------------------------------------
 	// now parse command line options
