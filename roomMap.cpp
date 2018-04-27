@@ -47,7 +47,7 @@ RoomMap::RoomMap(oldRmMap oldMap){
 
 // deconstructor
 RoomMap::~RoomMap(){
-    delete[] table;
+    //delete[] table;
 }
 
 //Custom booking function- handles insertion as needed as well as booking

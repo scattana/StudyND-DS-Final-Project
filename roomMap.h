@@ -71,7 +71,7 @@ Room::Room(std::string name, schedule &oldIn){
 }
 
 Room::~Room(){ //Destructor, modify this as necessary
-    delete &times;
+    //delete &times;
 }
 
 
