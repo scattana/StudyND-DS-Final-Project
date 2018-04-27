@@ -16,13 +16,15 @@ const double DEFAULT_LOAD_FACTOR = 0.6; //extern?
 const size_t DEFAULT_TABLE_SIZE = 20; //extern?
 const Room NONE(); //Definition?
 
+extern struct Booking; //Seth's booking structure
+
 class RoomMap {
 public:
         RoomMap();                                      // default constructor
         RoomMap(size_t, double);        		// constructor
         ~RoomMap();                                     // destructor
 
-        bool book(const std::string &key, const size_t &max, const size_t &time, const size_t &nPeople); //Function to book a time in a room; calls insert as needed.
+        bool book(const Booking &entry); //Function to book a time in a room; calls insert as needed.
         const Room search(const std::string &key); //Pre-written function, returns either the room with the right key or NULL if that room's not in the table
 
         void            insert(const Room &input); //Standard insert / dump
