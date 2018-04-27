@@ -15,24 +15,10 @@
 #include <stdio.h>
 #include <cerrno>
 #include <cstring>
-#include "roomMap.h"
+#include "roomMap.cpp"
 #include "booking.h"
 using namespace std;
 
-/*
-// "Booking" struct (each "booking" contains the data for one "study reservation"
-struct Booking{
-	string building;		// building name
-	string location;		// space identifier within building (i.e. room)
-	string f_name;			// first name
-	string l_name;			// last name
-	size_t num_people;		// number of people included in the booking
-	size_t s_time;			// start time of booking (hour 0 = now)
-	size_t book_len;		// duration in hours of booking (1-47)
-	size_t e_time;			// end time of booking (assigned after input)
-	size_t capacity;		// the room's capacity, assigned after input
-};
-*/
 
 // utility function prototypes
 string lower_str(string);
@@ -329,6 +315,11 @@ void receipt(Booking b){
 // -----------------------------------------------
 
 int main(int argc, char* argv[]){
+	// FIRST STEP: load booking data (current reservation schedule)
+	RoomMap myMap;
+	
+	// -----------------------------------------
+	// now parse command line options
 	size_t hour;
 	bool booked = false;
 	// parse command line options
@@ -347,8 +338,9 @@ int main(int argc, char* argv[]){
 	if(booked){
 		Booking b = newBooking(hour);
 
-		// map to RoomMap hash table
-		RoomMap myMap;
+		// map to RoomMap hash table (already defined from state load)
+		
+		
 
 		// print "receipt" of booking to text file in current directory
 		receipt(b);
