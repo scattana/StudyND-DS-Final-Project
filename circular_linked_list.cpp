@@ -1,12 +1,12 @@
 // Michael Moynihan
 // circular_linked_list.cpp
 
+#include "booking.h"
 #include <iostream>
 #include <chrono>
 #include <ctime>
 #include <string>
 
-extern struct Booking;
 const size_t NTIMES = 48;
 
 class List {
