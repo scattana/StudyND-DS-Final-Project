@@ -12,3 +12,14 @@ for building in BUILDINGS:
 		if odd:
 			keys.append(room)
 		odd = not odd
+for key in keys:
+	curr = data[key[:-1]]
+	print(key[:-1])
+	print(curr['year'])
+	print(curr['month'])
+	print(curr['day'])
+	print(curr['hour'])
+	print(curr['capacity'])
+	for i in range(48):
+		print(curr['hour{}'.format(i+1)]['people'])
+		print(','.join(curr['hour{}'.format(i+1)]['names']))

@@ -1,201 +1,201 @@
 {
-	'eg_lib':{
-		'year':2018,
-		'month':4,
-		'day':22,
-		'hour':23,
-		'capacity':30,
-		'hour1':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+	"Room 217 (EG Lounge)":{
+		"year":2018,
+		"month":4,
+		"day":22,
+		"hour":23,
+		"capacity":30,
+		"hour1":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour2':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour2":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour3':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour3":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour4':{
-			'people':2,
-			'names':['lacking ideas', 'Michael Moynihan']
+		"hour4":{
+			"people":2,
+			"names":["lacking ideas", "Michael Moynihan"]
 		},
-		'hour5':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour5":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour6':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour6":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour7':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour7":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour8':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour8":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour9':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour9":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour10':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour10":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour11':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour11":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour12':{
-			'people':2,
-			'names':['lacking ideas', 'Michael Moynihan']
+		"hour12":{
+			"people":2,
+			"names":["lacking ideas", "Michael Moynihan"]
 		},
-		'hour13':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour13":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour14':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour14":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour15':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour15":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour16':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour16":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour17':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour17":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour18':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour18":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour19':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour19":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour20':{
-			'people':2,
-			'names':['lacking ideas', 'Michael Moynihan']
+		"hour20":{
+			"people":2,
+			"names":["lacking ideas", "Michael Moynihan"]
 		},
-		'hour21':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour21":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour22':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour22":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour23':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour23":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour24':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour24":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour25':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour25":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour26':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour26":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour27':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour27":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour28':{
-			'people':2,
-			'names':['lacking ideas', 'Michael Moynihan']
+		"hour28":{
+			"people":2,
+			"names":["lacking ideas", "Michael Moynihan"]
 		},
-		'hour29':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour29":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour30':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour30":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour31':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour31":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour32':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour32":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour33':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour33":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour34':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour34":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour35':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour35":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour36':{
-			'people':2,
-			'names':['lacking ideas', 'Michael Moynihan']
+		"hour36":{
+			"people":2,
+			"names":["lacking ideas", "Michael Moynihan"]
 		},
-		'hour37':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour37":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour38':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour38":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour39':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour39":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour40':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour40":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour41':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour41":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour42':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour42":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour43':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour43":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour44':{
-			'people':2,
-			'names':['lacking ideas', 'Michael Moynihan']
+		"hour44":{
+			"people":2,
+			"names":["lacking ideas", "Michael Moynihan"]
 		},
-		'hour45':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour45":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour46':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
+		"hour46":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
 		},
-		'hour47':{
-			'people':3,
-			'names':['random person', 'Seth Cattanach', 'Another Person']
+		"hour47":{
+			"people":3,
+			"names":["random person", "Seth Cattanach", "Another Person"]
 		},
-		'hour48':{
-			'people':2,
-			'names':['lacking ideas', 'Aidan McDonald']
-		},
+		"hour48":{
+			"people":2,
+			"names":["lacking ideas", "Aidan McDonald"]
+		}
 	}
 }
