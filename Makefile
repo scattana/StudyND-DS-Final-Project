@@ -1,4 +1,4 @@
-CC=			g++
+CC=				g++
 CFLAGS=			-std=c++11 -fPIC
 TARGETS=		studyND
 LD=       		g++
