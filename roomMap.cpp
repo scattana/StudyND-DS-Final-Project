@@ -7,7 +7,6 @@
 #include <unistd.h>
 #include <stdexcept>
 
-//#include "room.h"
 #include "roomMap.h"
 
 //Room Object Methods:

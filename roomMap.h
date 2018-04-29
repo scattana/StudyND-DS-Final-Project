@@ -1,6 +1,6 @@
 // roomMap.h: header file for roomMap object
 
-#pragma once //May be unneccessary, depends on everyone else's header files
+#pragma once
 #include <iostream>
 #include <string>
 #include <functional>
@@ -9,8 +9,8 @@
 #include <stdexcept>
 #include <unordered_map>
 
-//#include "booking.h"
-#include "circular_linked_list.cpp"
+#include "booking.h"
+#include "circular_linked_list.h"
 
 typedef std::hash<std::string>  StringHasher;
 

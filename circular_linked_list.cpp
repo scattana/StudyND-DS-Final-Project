@@ -2,28 +2,9 @@
 // circular_linked_list.cpp
 
 #include "booking.h"
+#include "circular_linked_list.h"
 #include <iostream>
 #include <string>
-
-const size_t NTIMES = 48;
-
-class List {
-	public:
-		List();
-		List(size_t times[NTIMES],std::string names[NTIMES]);
-		~List();
-		size_t rotate();
-		bool isFull(Booking *b);
-		bool reserve(Booking *b);
-		void dump(std::ostream &s);
-	private:
-		struct Node{
-			size_t			people;
-			std::string		names;
-			Node 			*next;
-		};
-		Node *head;
-};
 
 List::List(){/*
 	head = new Node{0,"",nullptr};
