@@ -15,8 +15,8 @@
 #include <stdio.h>
 #include <cerrno>
 #include <cstring>
-#include "roomMap.cpp"
-//#include "booking.h"
+//#include "roomMap.cpp"			// UNCOMMENT THIS AND RE-COMMENT BOOKING.H TO TEST FULL THING
+#include "booking.h"
 using namespace std;
 
 
@@ -32,6 +32,25 @@ void system(unordered_map<string, Booking>&);	// reservation system w/HM
 size_t get_hour();								// from system_clock
 size_t get_capacity(string, size_t);			// from spec. bldg, room
 void receipt(Booking);							// outputs booking->txt file
+
+// ----------------------------------------------------------------------------
+//            UTILITY FUNCTIONS FOR studyND MAIN EXECUTION
+// ----------------------------------------------------------------------------
+
+// Usage function - called when "-h" command line option is set
+// or with improper usage
+int usage(string progname, int status){
+	cout << "\n-----------------------------------------------" << endl;
+	cout << "Usage: " << progname << " [OPTIONS]\n\n\t";
+	cout << "Command line options:\n\n\t-h\t\tDisplay this usage message\n";
+	cout << "\t-n\t\tMake New Study Booking\n";
+	cout << "\t-v BUILDING\tView study spaces and bookings for a specific building" << endl;
+	cout << "\nCurrent supported buildings:" << endl;
+	printBuildings();
+	cout << "\n-----------------------------------------------\n" << endl;
+	return status;
+}
+
 
 
 // Opens and prints list of currently-supported buildings in our database
@@ -161,22 +180,6 @@ Booking newBooking(size_t current_hour){
 }
 
 
-// Usage function - called when "-h" command line option is set
-// or with improper usage
-void usage(string progname, int status){
-	cout << "\n-----------------------------------------------" << endl;
-	cout << "Usage: " << progname << " [OPTIONS]\n\n\t";
-	cout << "Command line options:\n\n\t-h\t\tDisplay this usage message\n";
-	cout << "\t-n\t\tMake New Study Booking\n";
-	cout << "\t-v BUILDING\tView study spaces and bookings for a specific building" << endl;
-	cout << "\nCurrent supported buildings:" << endl;
-	printBuildings();
-	cout << "\n-----------------------------------------------\n" << endl;
-	exit(status);
-}
-
-
-
 // Utility function "lower_str" returns lowercase copy of string parameter
 string lower_str(string x){
 	for(int i=0; i < x.size(); i++) x[i] = tolower(x[i]);
@@ -218,7 +221,8 @@ size_t get_hour(){
  	chrono::duration<int,ratio<60*60*24>> one_day (1);
     chrono::system_clock::time_point today = chrono::system_clock::now();
     time_t tt = chrono::system_clock::to_time_t (today);
-    const char hr[2] = {ctime(&tt)[11], ctime(&tt)[12]};
+    const char hr[3] = {ctime(&tt)[11], ctime(&tt)[12], '\0'};
+cout << "\n\nDEBUGGING: hr is " << hr[0] << " and " << hr[1] << " \n\n" << endl;
     return (size_t)stoi(hr);
 }
 
@@ -311,6 +315,7 @@ void receipt(Booking b){
 	out << "Number of people: " << b.num_people << endl;
 	out << "Location capacity: " << b.capacity << endl;
 	out << "\n" << endl;
+	out.close();
 }
 
 
@@ -321,15 +326,15 @@ void receipt(Booking b){
 int main(int argc, char* argv[]){
 	// FIRST STEP: load booking data (current reservation schedule)
 	//RoomMap myMap;
-	unordered_map<string, RoomMap> myMap;
-	
+//	unordered_map<string, RoomMap> myMap;
+
 	// -----------------------------------------
 	// now parse command line options
 	size_t hour;
 	bool booked = false;
 	// parse command line options
-	if(argc == 1) usage(argv[0], 1);
-	if(strcmp(argv[1],"-h")==0) usage(argv[0], 0);
+	if(argc == 1) return usage(argv[0], 1);
+	if(strcmp(argv[1],"-h")==0) return usage(argv[0], 0);
 	int argind = 1;
 	for(argind; argind < argc; argind++){
 		// -n option means make new reservation
@@ -347,15 +352,15 @@ int main(int argc, char* argv[]){
 		// if the key already exists, call "book" function on the building
 		// and pass Booking object. If the key doesn't exist, map "building"
 		// to a new RoomMap object, then call "book" with the booking object
-		auto found = myMap.find(b.building);
-		if(found== myMap.end()){		// key was not found
-			RoomMap r;
-			myMap.insert(pair<string, RoomMap>(b.building, r));
+//		auto found = myMap.find(b.building);
+//		if(found== myMap.end()){		// key was not found
+//			RoomMap r;
+//			myMap.insert(pair<string, RoomMap>(b.building, r));
 			// TODO: CALL "book"
-		}
-		else{							// key was found
+//		}
+//		else{							// key was found
 			// TODO: CALL "book"
-		}
+//		}
 
 		// print "receipt" of booking to text file in current directory
 		receipt(b);
