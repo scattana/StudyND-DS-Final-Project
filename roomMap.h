@@ -1,6 +1,6 @@
 // roomMap.h: header file for roomMap object
 
-#pragma once //May be unneccessary, depends on everyone else's header files
+#pragma once
 #include <iostream>
 #include <string>
 #include <functional>
@@ -9,8 +9,8 @@
 #include <stdexcept>
 #include <unordered_map>
 
-//#include "booking.h"
-#include "circular_linked_list.cpp"
+#include "booking.h"
+#include "circular_linked_list.h"
 
 typedef std::hash<std::string>  StringHasher;
 
@@ -24,24 +24,11 @@ typedef struct {
 } schedule;
 typedef std::unordered_map<std::string, schedule> oldRmMap;
 
-class Room{
-    public:
-        Room(); //Default constructor
-        Room(std::string, size_t); //Normal constructor, sets room name and capacity
-        Room(std::string, schedule &);
-        ~Room(); //Destructor
-
-        Room(const Room &); //Copy Constructor
-        Room& operator= (const Room &); //Assignment Operator
-        friend bool operator== (const Room &, const Room &); //Overloaded tests
-        friend bool operator != (const Room &, const Room &);
-
-        std::string roomNum; //Data elements
-        size_t capacity;
-        List times;
-
-        bool book(Booking &); //Booking function
-};
+typedef struct{
+    std::string roomNum;
+    size_t capacity;
+    List times;
+} Room;
 
 
 class RoomMap {
