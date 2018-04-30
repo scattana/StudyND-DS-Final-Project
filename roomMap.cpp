@@ -10,6 +10,8 @@
 #include "roomMap.h"
 
 //Room Object Methods:
+const Room NONE{"", 0};
+
 
 bool operator== (const Room &r1, const Room &r2) { //Overloaded comparison operator
     if(r1.roomNum != r2.roomNum || r1.capacity != r2.capacity) {
@@ -22,15 +24,18 @@ bool operator != (const Room &r1, const Room &r2) { //Overloaded comparison oper
     return !(r1 == r2);
 }
 
+
 // Methods --------------------------------------------------------------------
-const Room NONE{"9 3/4", 42};
+//const Room NONE{"9 3/4", 42};
 
 // default constructor (use DEFAULT values)
 RoomMap::RoomMap(){
+        //std::cout << "In default constructor\n";
 	table_size = 0;
 	max_load_factor = DEFAULT_LOAD_FACTOR;
 	num_items = 0;
         table = nullptr;
+        //std::cout << "Right before resize\n";
 	resize(DEFAULT_TABLE_SIZE);
 }
 
@@ -52,24 +57,35 @@ RoomMap::RoomMap(oldRmMap oldMap){
     resize(DEFAULT_TABLE_SIZE);
     
     for(auto it = oldMap.begin(); it != oldMap.end(); it++){
-        Room NewRoom{it->first, it->second.cap, List(it->second.times, it->second.names)};
-        insert(NewRoom);
+        Room *NewRoom = new Room{it->first, it->second.cap, List(it->second.times, it->second.names)};
+        insert(*NewRoom);
     }
 }
 
 // deconstructor
 RoomMap::~RoomMap(){
-    std::cout << "We're deleting this memory\n";
-    delete[] table;
+    //std::cout << "In map deconstructor " << table_size << std::endl;
+    /*for(size_t c=0; c<table_size; c++){
+        std::cout << "Looping\n";
+        if(table[c] != NONE) {delete &table[c]; std::cout << "Found an item\n";}
+    }*/
+    //delete[] table;
+    //std::cout << "Ran delete command\n";
 }
 
 //Custom booking function- handles insertion as needed as well as booking
 bool RoomMap::book(Booking &entry) {
+    //std::cout << "In Booking\n";
     if(search(entry.location) == NONE) {
-        Room NewRoom{entry.location, entry.capacity};
-        insert(NewRoom);
+        //std::cout << "In new room if statement\n";
+        Room *NewRoom = new Room{entry.location, entry.capacity};
+        //std::cout << "Made new room\n";
+        insert(*NewRoom);
+        //std::cout << "About to finish if loop\n";
     }
-
+    
+    //std::cout << table[locate(entry.location)].roomNum << std::endl;
+    
     return table[locate(entry.location)].times.reserve(&entry);
     //return table[locate(entry.location)].book(entry);    
 }
@@ -81,20 +97,27 @@ void RoomMap::insert(const Room &input) {
     if(curr_load_factor >= max_load_factor){
 	resize(table_size*2);
     }
+    //std::cout << "In insert, before locate\n";
     size_t bucket = locate(input.roomNum);
     if(bucket == table_size){
+        //std::cout << "No empty buckets found\n";
 	resize(table_size*2); // if no empty buckets found
     }
     else if (table[bucket].roomNum != input.roomNum){
 	num_items++; // increment the number of UNIQUE items in the table
     }
     table[bucket] = input;
+    //std::cout << "Finished insert\n";
 }
 
 //Pre-written search function
 const Room RoomMap::search(const std::string &key) {
+    //std::cout << "In search\n";
     size_t bucket = locate(key);
-    if (table[bucket].roomNum == key)
+    //std::cout << "Past locate\n";
+    if(bucket >= table_size)
+        return NONE;
+    else if (table[bucket].roomNum == key)
         return table[bucket];
     else
         return NONE;
@@ -136,19 +159,20 @@ size_t  RoomMap::locate(const std::string &key) {
 	                        // an empty bucket, so 'insert' should call 'resize'
     }
 }
-
 // called by "insert" when (1) no empty entries in the table, or (2) when
 // current load factor exceeds max load factor
 void RoomMap::resize(const size_t new_size) {
     auto old_table = table;
     auto old_size = table_size;
-    table = new Room[new_size];
+    table = new Room[new_size]();
     table_size = new_size;
+    //std::cout << "Made new table\n";
     // copy old values from table to new table
     for(size_t i=0; i<old_size; i++){
 	if(old_table[i] != NONE) insert(old_table[i]);
     }
     if(old_table) delete[] old_table;
+    //std::cout << "Finished resize\n";
 }
 
 // vim: set sts=4 sw=4 ts=8 expandtab ft=cpp:

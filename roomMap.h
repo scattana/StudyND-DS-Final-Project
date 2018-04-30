@@ -24,7 +24,7 @@ typedef struct {
 } schedule;
 typedef std::unordered_map<std::string, schedule> oldRmMap;
 
-typedef struct{
+typedef struct {
     std::string roomNum;
     size_t capacity;
     List times;

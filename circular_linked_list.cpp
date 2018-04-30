@@ -6,14 +6,14 @@
 #include <iostream>
 #include <string>
 
-List::List(){/*
+List::List(){
 	head = new Node{0,"",nullptr};
 	Node *curr = head;
 	for(int i = 1;i < NTIMES;i++){
 		Node *temp = new Node{0,"",nullptr};
 		curr->next = temp;
 		curr = curr->next;
-	}*/
+	}
 }
 List::List(size_t times[NTIMES],std::string names[NTIMES]){
 	head = new Node{times[0],names[0],head};
@@ -25,6 +25,7 @@ List::List(size_t times[NTIMES],std::string names[NTIMES]){
 	}
 }
 List::~List(){
+	//std::cout << "In list deconstructor\n";
 	if(!head) return;
 	Node *prev = head;
 	Node *curr = head;
