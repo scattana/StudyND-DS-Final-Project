@@ -7,10 +7,10 @@
 #include <string>
 
 List::List(){
-	head = new Node{0,"",nullptr};
+	head = new Node{0,std::string(),nullptr};
 	Node *curr = head;
 	for(int i = 1;i < NTIMES;i++){
-		Node *temp = new Node{0,"",nullptr};
+		Node *temp = new Node{0,std::string(),nullptr};
 		curr->next = temp;
 		curr = curr->next;
 	}
@@ -43,7 +43,7 @@ size_t List::rotate(){
 	Node *curr = head;
 	while(curr->next != nullptr)
 		curr = curr->next;
-	curr->next = new Node{0,"",nullptr};
+	curr->next = new Node{0,std::string(),nullptr};
 	return people;
 }
 bool List::isFull(Booking *b){
