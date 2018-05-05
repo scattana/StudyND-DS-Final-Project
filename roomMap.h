@@ -27,7 +27,7 @@ typedef std::unordered_map<std::string, schedule> oldRmMap;
 struct Room{
     std::string roomNum;
     size_t capacity;
-    List times;
+    List *times;
 
     bool operator==(const Room &r2) const;
     bool operator!=(const Room &r2) const;

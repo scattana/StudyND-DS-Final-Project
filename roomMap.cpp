@@ -61,7 +61,8 @@ RoomMap::RoomMap(oldRmMap oldMap){
     resize(DEFAULT_TABLE_SIZE);
     
     for(auto it = oldMap.begin(); it != oldMap.end(); it++){
-        Room *NewRoom = new Room{it->first, it->second.cap, List(it->second.times, it->second.names)};
+        List *NewList = new List(it->second.times, it->second.names);
+        Room *NewRoom = new Room{it->first, it->second.cap, NewList};
         insert(*NewRoom);
     }
 }
@@ -71,7 +72,7 @@ RoomMap::~RoomMap(){
     //std::cout << "In map deconstructor " << table_size << std::endl;
     for(size_t c=0; c<table_size; c++){
         //std::cout << "Looping\n";
-        if(table[c] != NONE) {std::cout << "Found an item\n";}
+        if(table[c] != NONE) {std::cout << "Found an item\n"; delete table[c].times;}
     }
     delete[] table;
     //std::cout << "Ran delete command\n";
@@ -83,15 +84,18 @@ bool RoomMap::book(Booking &entry) {
     if(search(entry.location) == NONE) {
         std::cout << "Need to make a new room\n";
         List *NewList = new List;
-        Room *NewRoom = new Room{entry.location, entry.capacity, *NewList};
+        Room *NewRoom = new Room{entry.location, entry.capacity, NewList};
         //std::cout << "Made new room\n";
         insert(*NewRoom);
         //std::cout << "About to finish if loop\n";
     }
     
     //std::cout << table[locate(entry.location)].roomNum << std::endl;
-    
-    return table[locate(entry.location)].times.reserve(&entry);
+    //table[locate(entry.location)].times.dump(std::cout);
+
+    std::cout << "Found in bucket " << locate(entry.location) << std::endl;
+
+    return table[locate(entry.location)].times->reserve(&entry);
     //return table[locate(entry.location)].book(entry);    
 }
 
@@ -112,7 +116,7 @@ void RoomMap::insert(const Room &input) {
 	num_items++; // increment the number of UNIQUE items in the table
     }
     table[bucket] = input;
-    //std::cout << "Finished insert\n";
+    std::cout << "Inserted in bucket " << bucket << std::endl;
 }
 
 //Pre-written search function
@@ -134,7 +138,7 @@ void RoomMap::dump(std::ostream &os) {
     for(size_t i=0; i<table_size; i++){
 	if(table[i] != NONE){
             os << table[i].roomNum << ", capacity: " << table[i].capacity << std::endl;
-            table[i].times.dump(os);
+            table[i].times->dump(os);
             os << std::endl;
 	}
     }

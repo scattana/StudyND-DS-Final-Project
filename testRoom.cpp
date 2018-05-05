@@ -28,11 +28,15 @@ int main(int argv, char *argc[]) {
     RoomMap testMap;
     testMap.book(testBook);
 
-    Booking newBook = {"Knot","314P","Aiden","McDonald",1,6,1,7,20};
+    //RoomMap otherMap;
+    Booking newBook = {"Knot","121B","Aiden","McDonald",2,6,1,7,10};
+    Booking newerBook = {"Knute","315K","Aidan","MacDonald",1,6,1,7,20};
     testMap.book(newBook);
-   
-    testMap.dump(std::cout);
+    testMap.book(newerBook);
     
+    testMap.dump(std::cout);
+    //otherMap.dump(std::cout);
+
     return 0;
 }
 

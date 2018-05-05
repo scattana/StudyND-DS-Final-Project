@@ -8,6 +8,9 @@
 
 List::List(){
 	//std::cout << "In list constructor\n";
+	Node * tempArr = new Node[3];
+	//delete[] tempArr;
+	//int * c = new int;
 	head = new Node{0,std::string(),nullptr};
 	Node *curr = head;
 	for(int i = 1;i < NTIMES;i++){
@@ -51,11 +54,20 @@ size_t List::rotate(){
 bool List::isFull(Booking *b){
 	Node *curr = head;
 	for(size_t i = 0;i < b->s_time;i++){
-		if(!curr->next) return true;
+		if(!curr->next) {
+			std::cout << "Trying to schedule more than 48 hours from now\n";
+			return true;
+		}
 		curr = curr->next;
 	}
 	for(size_t i = 0;i < b->book_len;i++){
-		if(!curr->next || curr->people+b->num_people > b->capacity) return true;
+		if(!curr->next || curr->people+b->num_people > b->capacity) {
+			if(!curr->next)
+			std::cout << "Booking ends too late\n";
+			else
+			std::cout << "Room too full!\n";
+			return true;
+		}
 		curr = curr->next;
 	}
 	return false;
@@ -63,10 +75,13 @@ bool List::isFull(Booking *b){
 
 bool List::reserve(Booking *b){
 	std::cout << "Reserving space in room " << b->location << std::endl;
+	//dump(std::cout);
 	if(!isFull(b)){
 		Node *curr = head;
-		for(size_t i = 0;i < b->s_time;i++)
+		std::cout << "Starting time: " << b->s_time << std::endl;
+		for(size_t i = 0;i < b->s_time;i++){
 			curr = curr->next;
+		}
 		for(size_t i = 0;i < b->book_len;i++){
 			curr->people += b->num_people;
 			for(size_t j = 0;j < b->num_people;j++)
@@ -74,6 +89,9 @@ bool List::reserve(Booking *b){
 			curr = curr->next;
 		}
 		return true;
+	}
+	else {
+		std::cout << "Calendar's full!\n";
 	}
 	return false;
 }
