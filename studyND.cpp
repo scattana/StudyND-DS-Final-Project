@@ -15,17 +15,17 @@
 #include <stdio.h>
 #include <cerrno>
 #include <cstring>
-#include "roomMap.h"			// For the new library syste, include both of these .h files
+//#include "roomMap.h"			// For the new library syste, include both of these .h files
 #include "booking.h"
 using namespace std;
 
 
 // utility function prototypes
-void printBuildings();							// from file loc in Public
+int printBuildings();							// from file loc in Public
 Booking newBooking(size_t);						// makes&returns new booking
 string lower_str(string);						// returns lowercase string
 void printBooking(Booking);						// prints formatted booking
-void printRooms(string temp);					// prints rooms in spec bldg
+int printRooms(string temp);					// prints rooms in spec bldg
 string returnRoom(size_t n, string temp);		// from numeric identifier
 string formatTime(size_t);						// in 12-hour format
 void system(unordered_map<string, Booking>&);	// reservation system w/HM
@@ -54,14 +54,14 @@ int usage(string progname, int status){
 
 
 // Opens and prints list of currently-supported buildings in our database
-void printBuildings(){
+int printBuildings(){
 	const char *file_path = "/afs/nd.edu/user24/scattana/Public/buildings.txt";
 	FILE *buildings;
 	buildings = fopen(file_path,"r");
 	// If file doesn't open, return errror message and exit w/failure
 	if(!buildings){
 		fprintf(stderr, "Could not open file %s: %s\n", file_path, strerror(errno));
-		exit(EXIT_FAILURE);
+		return -1;		// failure
 	}
 	// If file *does* open, print list of buildings, then close file
 	char temp[BUFSIZ];
@@ -69,10 +69,12 @@ void printBuildings(){
 	while(fgets(temp, BUFSIZ, buildings)) printf("\t%s", temp);
 	cout << endl;		// formatting
 	fclose(buildings);
+	return 0;			// success
 }
 
 // Makes and returns a new Booking based on user input
 Booking newBooking(size_t current_hour){
+	int stat = 0;		// success by default
 	string temp;
 	// do-while loop prints instructions once, and repeats while "view" is specified
 	do{
@@ -82,8 +84,13 @@ Booking newBooking(size_t current_hour){
 		cout << "\t-to view a list of currently-supported buildings, type \"view\"\n";
 		cout << "\t-to exit, type \"exit\"\n";
 		getline(cin, temp);	// get input from user
-		if(lower_str(temp)=="view") printBuildings();
-		if(lower_str(temp)=="exit") exit(0);
+		if(lower_str(temp)=="view") stat = printBuildings();
+		if(lower_str(temp)=="exit"){
+			stat = -1;		// failure
+			Booking booking;
+			booking.status = stat;
+			return booking;
+		}
 	}
 	while(lower_str(temp)=="view");
 
@@ -94,7 +101,7 @@ Booking newBooking(size_t current_hour){
 	buildings = fopen(file_path,"r");
 	if(!buildings){
 		fprintf(stderr, "Could not open file %s: %s\n", file_path, strerror(errno));
-		exit(EXIT_FAILURE);
+		stat = -1;		// failure
 	}
 	char hold[BUFSIZ];
 	while(fgets(hold, BUFSIZ, buildings)){
@@ -109,7 +116,7 @@ Booking newBooking(size_t current_hour){
 		cout << "\n\"" << temp << "\" was not found." << endl;
 		cout << "Please enter a building from the list below, ";
 		cout << "or type \"exit\" to exit the program: " << endl;
-		printBuildings();
+		stat = printBuildings();		// success or failure
 		getline(cin, temp);
 		found = mySet.find(lower_str(temp));
 		if(lower_str(temp)=="exit") exit(0);
@@ -121,7 +128,7 @@ Booking newBooking(size_t current_hour){
 
 	// Now, get and find space location within a particular building:
 	cout << "\nSpace locations available in " << lower_str(temp) << ":\n";
-	printRooms(lower_str(temp));
+	stat = printRooms(lower_str(temp));
 	cout << "\nPlease enter the number (below) of the space location you wish to reserve:\n";
 	//getline(cin, temp);
 	size_t num;
@@ -131,6 +138,7 @@ Booking newBooking(size_t current_hour){
 
 	// Get and assign capacity from room location to Booking struct
 	booking.capacity = get_capacity(booking.building, num);
+	if(booking.capacity == 0) stat = -1;
 
 	// Get and store time of reservation
 	cout << "\nThe current hour is: " << formatTime(get_hour()) << endl;
@@ -176,6 +184,8 @@ Booking newBooking(size_t current_hour){
 	}
 	else cout << "\nYour booking was confirmed! Thank you for using studyND\n" << endl;
 
+	// assign status to booking and return
+	booking.status = stat;
 	return booking;
 }
 
@@ -222,12 +232,11 @@ size_t get_hour(){
     chrono::system_clock::time_point today = chrono::system_clock::now();
     time_t tt = chrono::system_clock::to_time_t (today);
     const char hr[3] = {ctime(&tt)[11], ctime(&tt)[12], '\0'};
-cout << "\n\nDEBUGGING: hr is " << hr[0] << " and " << hr[1] << " \n\n" << endl;
     return (size_t)stoi(hr);
 }
 
 // Utility function to print the rooms and capacities for a specified building
-void printRooms(string temp){
+int printRooms(string temp){
 	cout << endl;		// formatting
 	// open file
 	ifstream ifs;
@@ -238,7 +247,7 @@ void printRooms(string temp){
 	else if(temp=="stinson-remick") ifs.open("/afs/nd.edu/user24/scattana/Public/stinson.txt", ifstream::in);
 	else{
 		cout << "Building " << temp << " was not found. Leaving studyND" << endl;
-		exit(EXIT_FAILURE);
+		return -1;
 	}
 	string loc, cap;
 	int rmNum = 1;
@@ -253,6 +262,7 @@ void printRooms(string temp){
 	}
 	// close the file
 	ifs.close();
+	return 0;
 }
 
 // Utility function to return the space location name for a specified space
@@ -266,7 +276,7 @@ string returnRoom(size_t n, string temp){
 	else if(temp=="stinson-remick") ifs.open("/afs/nd.edu/user24/scattana/Public/stinson.txt", ifstream::in);
 	else{
 		cout << "Building " << temp << " was not found. Leaving studyND" << endl;
-		exit(EXIT_FAILURE);
+		return "";
 	}
 	string temp2;
 	int count = 1;
@@ -290,7 +300,7 @@ size_t get_capacity(string temp, size_t loc){
 	else if(temp=="stinson-remick") ifs.open("/afs/nd.edu/user24/scattana/Public/stinson.txt", ifstream::in);
 	else{
 		cout << "Building " << temp << " was not found. Leaving studyND" << endl;
-		exit(EXIT_FAILURE);
+		return 0;
 	}
 	string name;
 	size_t counter = 1;
@@ -326,7 +336,7 @@ void receipt(Booking b){
 int main(int argc, char* argv[]){
 	// FIRST STEP: load booking data (current reservation schedule)
 	//RoomMap myMap;
-	unordered_map<string, RoomMap> myMap;
+//	unordered_map<string, RoomMap> myMap;
 
 	// -----------------------------------------
 	// now parse command line options
@@ -347,11 +357,12 @@ int main(int argc, char* argv[]){
 	// if a booking is desired, make booking and output to file:
 	if(booked){
 		Booking b = newBooking(hour);
+		if(b.status != 0) return EXIT_FAILURE;
 
 		// try to add new <building, RoomMap> entry to the unordered_map
 		// if the key already exists, call "book" function on the building
 		// and pass Booking object. If the key doesn't exist, map "building"
-		// to a new RoomMap object, then call "book" with the booking object
+/*		// to a new RoomMap object, then call "book" with the booking object
 		auto found = myMap.find(b.building);
 		if(found== myMap.end()){		// key was not found
 			RoomMap r;
@@ -361,7 +372,7 @@ int main(int argc, char* argv[]){
 		else{							// key was found
 			// TODO: CALL "book"
 		}
-
+*/
 		// print "receipt" of booking to text file in current directory
 		receipt(b);
 	}
