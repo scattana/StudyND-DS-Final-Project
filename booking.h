@@ -11,4 +11,5 @@ struct Booking{
 	size_t book_len;		// duration in hours of booking (0-48)
 	size_t e_time;			// end time of booking (assigned after input)
 	size_t capacity;		// room's capacity (assigned after input)
+	int status;				// status used to create booking struct, in main
 };
