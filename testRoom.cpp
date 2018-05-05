@@ -9,7 +9,7 @@
 #include "booking.h"
 
 int main(int argv, char *argc[]) {
-    Booking testBook;//{"","","","",0,0,0,0,0};
+    Booking testBook;// = {"","","","",0,0,0,0,0};
     testBook.building = "Knott";
     testBook.location = "121B";
     testBook.f_name = "Aidan";
@@ -18,16 +18,17 @@ int main(int argv, char *argc[]) {
     testBook.s_time = 2;
     testBook.book_len = 3;
     testBook.e_time = 2+3;
-    testBook.capacity = 20;
+    testBook.capacity = 10;
     
 
-    Room testBlank={""}; Room otherBlank={""};
-    if(testBlank != otherBlank) return EXIT_FAILURE;
+    //Room testBlank={""}; Room otherBlank={""};
+    //if(testBlank != otherBlank) return EXIT_FAILURE;
 
+    
     RoomMap testMap;
     testMap.book(testBook);
 
-    Booking newBook = {"","121B","Aidan","McDonald",1,6,1,7,20};
+    Booking newBook = {"Knot","314P","Aiden","McDonald",1,6,1,7,20};
     testMap.book(newBook);
    
     testMap.dump(std::cout);

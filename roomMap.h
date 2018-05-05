@@ -24,11 +24,14 @@ typedef struct {
 } schedule;
 typedef std::unordered_map<std::string, schedule> oldRmMap;
 
-typedef struct {
+struct Room{
     std::string roomNum;
     size_t capacity;
     List times;
-} Room;
+
+    bool operator==(const Room &r2) const;
+    bool operator!=(const Room &r2) const;
+};
 
 
 class RoomMap {

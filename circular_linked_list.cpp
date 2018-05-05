@@ -7,6 +7,7 @@
 #include <string>
 
 List::List(){
+	//std::cout << "In list constructor\n";
 	head = new Node{0,std::string(),nullptr};
 	Node *curr = head;
 	for(int i = 1;i < NTIMES;i++){
@@ -14,6 +15,7 @@ List::List(){
 		curr->next = temp;
 		curr = curr->next;
 	}
+	head->people = 1; head->names = "default";
 }
 List::List(size_t times[NTIMES],std::string names[NTIMES]){
 	head = new Node{times[0],names[0],head};
@@ -60,6 +62,7 @@ bool List::isFull(Booking *b){
 }
 
 bool List::reserve(Booking *b){
+	std::cout << "Reserving space in room " << b->location << std::endl;
 	if(!isFull(b)){
 		Node *curr = head;
 		for(size_t i = 0;i < b->s_time;i++)
@@ -67,14 +70,16 @@ bool List::reserve(Booking *b){
 		for(size_t i = 0;i < b->book_len;i++){
 			curr->people += b->num_people;
 			for(size_t j = 0;j < b->num_people;j++)
-				curr->names = curr->names+","+b->f_name+" "+b->l_name;
+				curr->names = curr->names+b->f_name+" "+b->l_name+",";
+			curr = curr->next;
 		}
 		return true;
 	}
 	return false;
 }
 void List::dump(std::ostream &os){
+	size_t hour=0;
 	for(Node *t = head;t != nullptr;t=t->next){
-		os << t->people << ':' << t->names << std::endl;
+		os << hour++ << "- " << t->people << ':' << t->names << std::endl;
 	}
 }

@@ -13,15 +13,19 @@
 const Room NONE{"", 0};
 
 
-bool operator== (const Room &r1, const Room &r2) { //Overloaded comparison operator
-    if(r1.roomNum != r2.roomNum || r1.capacity != r2.capacity) {
+bool Room::operator== (const Room &r2) const { //Overloaded comparison operator
+    if(this->roomNum != r2.roomNum || this->capacity != r2.capacity) {
         return false;
     }
     else return true;
 }
 
-bool operator != (const Room &r1, const Room &r2) { //Overloaded comparison operator
-    return !(r1 == r2);
+bool Room::operator != (const Room &r2) const { //Overloaded comparison operator
+    if(roomNum != r2.roomNum || capacity != r2.capacity) {
+        //std::cout << roomNum << "|" << r2.roomNum << std::endl;
+        return true;
+    }
+    else return false;
 }
 
 
@@ -65,11 +69,11 @@ RoomMap::RoomMap(oldRmMap oldMap){
 // deconstructor
 RoomMap::~RoomMap(){
     //std::cout << "In map deconstructor " << table_size << std::endl;
-    /*for(size_t c=0; c<table_size; c++){
-        std::cout << "Looping\n";
-        if(table[c] != NONE) {delete &table[c]; std::cout << "Found an item\n";}
-    }*/
-    //delete[] table;
+    for(size_t c=0; c<table_size; c++){
+        //std::cout << "Looping\n";
+        if(table[c] != NONE) {std::cout << "Found an item\n";}
+    }
+    delete[] table;
     //std::cout << "Ran delete command\n";
 }
 
@@ -77,8 +81,9 @@ RoomMap::~RoomMap(){
 bool RoomMap::book(Booking &entry) {
     //std::cout << "In Booking\n";
     if(search(entry.location) == NONE) {
-        //std::cout << "In new room if statement\n";
-        Room *NewRoom = new Room{entry.location, entry.capacity};
+        std::cout << "Need to make a new room\n";
+        List *NewList = new List;
+        Room *NewRoom = new Room{entry.location, entry.capacity, *NewList};
         //std::cout << "Made new room\n";
         insert(*NewRoom);
         //std::cout << "About to finish if loop\n";
@@ -128,14 +133,9 @@ const Room RoomMap::search(const std::string &key) {
 void RoomMap::dump(std::ostream &os) {
     for(size_t i=0; i<table_size; i++){
 	if(table[i] != NONE){
-            os << table[i].roomNum << std::endl; //Modify this to dump table info as well?
-            /*
-	    switch(flag){
-		case DUMP_KEY:	     os << table[i].first << std::endl; break;
-		case DUMP_VALUE:     os << table[i].second << std::endl; break;
-		case DUMP_KEY_VALUE: os << table[i].first << "\t" << table[i].second << std::endl; break;
-		case DUMP_VALUE_KEY: os << table[i].second << "\t" << table[i].first << std::endl; break;
-	    } */
+            os << table[i].roomNum << ", capacity: " << table[i].capacity << std::endl;
+            table[i].times.dump(os);
+            os << std::endl;
 	}
     }
 }
@@ -162,11 +162,15 @@ size_t  RoomMap::locate(const std::string &key) {
 // called by "insert" when (1) no empty entries in the table, or (2) when
 // current load factor exceeds max load factor
 void RoomMap::resize(const size_t new_size) {
+    std::cout << "Resizing table\n";
     auto old_table = table;
     auto old_size = table_size;
     table = new Room[new_size]();
     table_size = new_size;
     //std::cout << "Made new table\n";
+    for(size_t c=0; c<new_size; c++){
+        table[c] = NONE;
+    }
     // copy old values from table to new table
     for(size_t i=0; i<old_size; i++){
 	if(old_table[i] != NONE) insert(old_table[i]);
