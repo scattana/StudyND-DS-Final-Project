@@ -8,7 +8,7 @@
 #include "roomMap.h"
 #include "booking.h"
 
-int main() {
+int main(int argv, char *argc[]) {
     Booking testBook;//{"","","","",0,0,0,0,0};
     testBook.building = "Knott";
     testBook.location = "121B";
@@ -20,14 +20,18 @@ int main() {
     testBook.e_time = 2+3;
     testBook.capacity = 20;
     
+
+    Room testBlank={""}; Room otherBlank={""};
+    if(testBlank != otherBlank) return EXIT_FAILURE;
+
     RoomMap testMap;
     testMap.book(testBook);
 
-    Booking newBook = {"","315 K","Aidan","McDonald",1,2,3,5,6};
+    Booking newBook = {"","121B","Aidan","McDonald",1,6,1,7,20};
     testMap.book(newBook);
    
     testMap.dump(std::cout);
-     
+    
     return 0;
 }
 
