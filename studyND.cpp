@@ -19,6 +19,7 @@
 #include "booking.h"
 using namespace std;
 
+string Root = "data/";
 
 // utility function prototypes
 int printBuildings();							// from file loc in Public
@@ -55,12 +56,12 @@ int usage(string progname, int status){
 
 // Opens and prints list of currently-supported buildings in our database
 int printBuildings(){
-	const char *file_path = "/afs/nd.edu/user24/scattana/Public/buildings.txt";
+	string file_path = Root + "buildings.txt";
 	FILE *buildings;
-	buildings = fopen(file_path,"r");
+	buildings = fopen(file_path.c_str(),"r");
 	// If file doesn't open, return errror message and exit w/failure
 	if(!buildings){
-		fprintf(stderr, "Could not open file %s: %s\n", file_path, strerror(errno));
+		fprintf(stderr, "Could not open file %s: %s\n", file_path.c_str(), strerror(errno));
 		return -1;		// failure
 	}
 	// If file *does* open, print list of buildings, then close file
@@ -97,10 +98,10 @@ Booking newBooking(size_t current_hour){
 	// Make list of buildings from file and store as unordered_set for fast retreival
 	unordered_set<string> mySet;
 	FILE *buildings;
-	const char *file_path = "/afs/nd.edu/user24/scattana/Public/buildings.txt";
-	buildings = fopen(file_path,"r");
+	string file_path = Root+"buildings.txt";
+	buildings = fopen(file_path.c_str(),"r");
 	if(!buildings){
-		fprintf(stderr, "Could not open file %s: %s\n", file_path, strerror(errno));
+		fprintf(stderr, "Could not open file %s: %s\n", file_path.c_str(), strerror(errno));
 		stat = -1;		// failure
 	}
 	char hold[BUFSIZ];
@@ -250,11 +251,10 @@ int printRooms(string temp){
 	cout << endl;		// formatting
 	// open file
 	ifstream ifs;
-	if(temp=="cushing") ifs.open("/afs/nd.edu/user24/scattana/Public/cushing.txt", ifstream::in);
-	else if(temp=="fitzpatrick") ifs.open("/afs/nd.edu/user24/scattana/Public/fitzpatrick.txt", 
-	ifstream::in);
-	else if(temp=="duncan student center") ifs.open("/afs/nd.edu/user24/scattana/Public/duncan.txt", ifstream::in);
-	else if(temp=="stinson-remick") ifs.open("/afs/nd.edu/user24/scattana/Public/stinson.txt", ifstream::in);
+	if(temp=="cushing") ifs.open((Root+"cushing.txt").c_str(), ifstream::in);
+	else if(temp=="fitzpatrick") ifs.open((Root+"fitzpatrick.txt").c_str(), ifstream::in);
+	else if(temp=="duncan student center") ifs.open((Root+"duncan.txt").c_str(), ifstream::in);
+	else if(temp=="stinson-remick") ifs.open((Root+"stinson.txt").c_str(), ifstream::in);
 	else{
 		cout << "Building " << temp << " was not found. Leaving studyND" << endl;
 		return -1;
@@ -280,10 +280,10 @@ int printRooms(string temp){
 string returnRoom(size_t n, string temp){
 	// open file
 	ifstream ifs;
-	if(temp=="cushing") ifs.open("/afs/nd.edu/user24/scattana/Public/cushing.txt", ifstream::in);
-	else if(temp=="fitzpatrick") ifs.open("/afs/nd.edu/user24/scattana/Public/fitzpatrick.txt", ifstream::in);
-	else if(temp=="duncan student center") ifs.open("/afs/nd.edu/user24/scattana/Public/duncan.txt", ifstream::in); 
-	else if(temp=="stinson-remick") ifs.open("/afs/nd.edu/user24/scattana/Public/stinson.txt", ifstream::in);
+	if(temp=="cushing") ifs.open((Root+"cushing.txt").c_str(), ifstream::in);
+	else if(temp=="fitzpatrick") ifs.open((Root+"fitzpatrick.txt").c_str(), ifstream::in);
+	else if(temp=="duncan student center") ifs.open((Root+"duncan.txt").c_str(), ifstream::in); 
+	else if(temp=="stinson-remick") ifs.open((Root+"stinson.txt").c_str(), ifstream::in);
 	else{
 		cout << "Building " << temp << " was not found. Leaving studyND" << endl;
 		return "";
@@ -304,10 +304,10 @@ string returnRoom(size_t n, string temp){
 size_t get_capacity(string temp, size_t loc){
 	// open file
 	ifstream ifs;
-	if(temp=="cushing") ifs.open("/afs/nd.edu/user24/scattana/Public/cushing.txt", ifstream::in);
-	else if(temp=="fitzpatrick") ifs.open("/afs/nd.edu/user24/scattana/Public/fitzpatrick.txt", ifstream::in);
-	else if(temp=="duncan student center") ifs.open("/afs/nd.edu/user24/scattana/Public/duncan.txt", ifstream::in); 
-	else if(temp=="stinson-remick") ifs.open("/afs/nd.edu/user24/scattana/Public/stinson.txt", ifstream::in);
+	if(temp=="cushing") ifs.open((Root+"cushing.txt").c_str(), ifstream::in);
+	else if(temp=="fitzpatrick") ifs.open((Root+"fitzpatrick.txt").c_str(), ifstream::in);
+	else if(temp=="duncan student center") ifs.open((Root+"duncan.txt").c_str(), ifstream::in); 
+	else if(temp=="stinson-remick") ifs.open((Root+"stinson.txt").c_str(), ifstream::in);
 	else{
 		cout << "Building " << temp << " was not found. Leaving studyND" << endl;
 		return 0;
