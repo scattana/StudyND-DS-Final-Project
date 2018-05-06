@@ -17,7 +17,7 @@ List::List(){
 		curr->next = temp;
 		curr = curr->next;
 	}
-	head->people = 1; head->names = "default";
+	//head->people = 1; head->names = "default";
 }
 List::List(size_t times[NTIMES],std::string names[NTIMES]){
 	head = new Node{times[0],names[0],head};

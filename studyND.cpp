@@ -339,7 +339,7 @@ void receipt(Booking b){
 
 int main(int argc, char* argv[]){
 	// FIRST STEP: load booking data (current reservation schedule)
-	unordered_map<string, RoomMap> myMap;
+	unordered_map<string, RoomMap *> myMap;
 
 	// -----------------------------------------
 	// now parse command line options
@@ -368,16 +368,18 @@ int main(int argc, char* argv[]){
 		// to a new RoomMap object, then call "book" with the booking object
 		auto found = myMap.find(b.building);
 		if(found== myMap.end()){		// key was not found
-			RoomMap r;
-			myMap.insert(pair<string, RoomMap>(b.building, r));
-			// TODO: CALL "book"
+			RoomMap *r = new RoomMap;
+			myMap.insert(pair<string, RoomMap *>(b.building, r));
+			myMap[b.building]->book(b);
 		}
 		else{							// key was found
-			// TODO: CALL "book"
+			myMap[b.building]->book(b);
 		}
 
+		myMap[b.building]->dump(cout);
 		// print "receipt" of booking to text file in current directory
 		receipt(b);
+		for(auto c = myMap.begin(); c != myMap.end(); c++) delete c->second;
 	}
 
 	return EXIT_SUCCESS;

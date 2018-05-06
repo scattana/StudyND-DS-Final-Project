@@ -25,16 +25,17 @@ int main(int argv, char *argc[]) {
     //if(testBlank != otherBlank) return EXIT_FAILURE;
 
     
-    RoomMap testMap;
-    testMap.book(testBook);
+    RoomMap *testMap = new RoomMap;
+    testMap->book(testBook);
 
     Booking newBook = {"Knot","121B","Aiden","McDonald",2,6,1,7,10};
     Booking newerBook = {"Knute","315K","Aidan","MacDonald",1,6,1,7,20};
-    testMap.book(newBook);
-    testMap.book(newerBook);
+    testMap->book(newBook);
+    testMap->book(newerBook);
     
-    testMap.dump(std::cout);
+    testMap->dump(std::cout);
     //otherMap.dump(std::cout);
+    delete testMap;
 
     return 0;
 }
