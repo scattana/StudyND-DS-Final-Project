@@ -8,7 +8,6 @@
 
 List::List(){
 	//std::cout << "In list constructor\n";
-	Node * tempArr = new Node[3];
 	//delete[] tempArr;
 	//int * c = new int;
 	head = new Node{0,std::string(),nullptr};
@@ -55,17 +54,18 @@ bool List::isFull(Booking *b){
 	Node *curr = head;
 	for(size_t i = 0;i < b->s_time;i++){
 		if(!curr->next) {
-			std::cout << "Trying to schedule more than 48 hours from now\n";
+			//std::cout << "Trying to schedule more than 48 hours from now\n";
 			return true;
 		}
 		curr = curr->next;
 	}
 	for(size_t i = 0;i < b->book_len;i++){
 		if(!curr->next || curr->people+b->num_people > b->capacity) {
-			if(!curr->next)
-			std::cout << "Booking ends too late\n";
+			/*if(!curr->next)
+				std::cout << "Booking ends too late\n";
 			else
-			std::cout << "Room too full!\n";
+				std::cout << "Room too full!\n";
+			*/
 			return true;
 		}
 		curr = curr->next;
@@ -74,11 +74,11 @@ bool List::isFull(Booking *b){
 }
 
 bool List::reserve(Booking *b){
-	std::cout << "Reserving space in room " << b->location << std::endl;
+	//std::cout << "Reserving space in room " << b->location << std::endl;
 	//dump(std::cout);
 	if(!isFull(b)){
 		Node *curr = head;
-		std::cout << "Starting time: " << b->s_time << std::endl;
+		//std::cout << "Starting time: " << b->s_time << std::endl;
 		for(size_t i = 0;i < b->s_time;i++){
 			curr = curr->next;
 		}
@@ -91,7 +91,7 @@ bool List::reserve(Booking *b){
 		return true;
 	}
 	else {
-		std::cout << "Calendar's full!\n";
+		//std::cout << "Calendar's full!\n";
 	}
 	return false;
 }

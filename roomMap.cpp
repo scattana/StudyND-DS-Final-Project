@@ -4,6 +4,7 @@
 #include <string>
 #include <functional>
 #include <utility>
+#include <vector>
 #include <unistd.h>
 #include <stdexcept>
 #include "circular_linked_list.cpp"
@@ -63,6 +64,7 @@ RoomMap::RoomMap(oldRmMap oldMap){
     for(auto it = oldMap.begin(); it != oldMap.end(); it++){
         List *NewList = new List(it->second.times, it->second.names);
         Room *NewRoom = new Room{it->first, it->second.cap, NewList};
+        toDelete.push_back(NewRoom);
         insert(*NewRoom);
     }
 }
@@ -72,8 +74,16 @@ RoomMap::~RoomMap(){
     //std::cout << "In map deconstructor " << table_size << std::endl;
     for(size_t c=0; c<table_size; c++){
         //std::cout << "Looping\n";
-        if(table[c] != NONE) {std::cout << "Found an item\n"; delete table[c].times;}
+        if(table[c] != NONE) {
+            //std::cout << "Found an item:\n";
+            //std::cout << table[c].roomNum << std::endl;
+            delete table[c].times;
+            //Room * test = &(table[c]);
+            //delete test;
+        }
     }
+    int temp = toDelete.size();
+    for(int c=0; c<temp; c++) delete toDelete[c];
     delete[] table;
     //std::cout << "Ran delete command\n";
 }
@@ -82,9 +92,10 @@ RoomMap::~RoomMap(){
 bool RoomMap::book(Booking &entry) {
     //std::cout << "In Booking\n";
     if(search(entry.location) == NONE) {
-        std::cout << "Need to make a new room\n";
+        //std::cout << "Need to make a new room\n";
         List *NewList = new List;
         Room *NewRoom = new Room{entry.location, entry.capacity, NewList};
+        toDelete.push_back(NewRoom);
         //std::cout << "Made new room\n";
         insert(*NewRoom);
         //std::cout << "About to finish if loop\n";
@@ -93,7 +104,7 @@ bool RoomMap::book(Booking &entry) {
     //std::cout << table[locate(entry.location)].roomNum << std::endl;
     //table[locate(entry.location)].times.dump(std::cout);
 
-    std::cout << "Found in bucket " << locate(entry.location) << std::endl;
+    //std::cout << "Found in bucket " << locate(entry.location) << std::endl;
 
     return table[locate(entry.location)].times->reserve(&entry);
     //return table[locate(entry.location)].book(entry);    
@@ -116,7 +127,7 @@ void RoomMap::insert(const Room &input) {
 	num_items++; // increment the number of UNIQUE items in the table
     }
     table[bucket] = input;
-    std::cout << "Inserted in bucket " << bucket << std::endl;
+    //std::cout << "Inserted in bucket " << bucket << std::endl;
 }
 
 //Pre-written search function
@@ -166,7 +177,7 @@ size_t  RoomMap::locate(const std::string &key) {
 // called by "insert" when (1) no empty entries in the table, or (2) when
 // current load factor exceeds max load factor
 void RoomMap::resize(const size_t new_size) {
-    std::cout << "Resizing table\n";
+    //std::cout << "Resizing table\n";
     auto old_table = table;
     auto old_size = table_size;
     table = new Room[new_size]();

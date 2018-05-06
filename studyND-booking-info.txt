@@ -1,8 +1,9 @@
-YOUR studyND BOOKING MADE AT HOUR: 9:00 PM
+YOUR studyND BOOKING MADE AT HOUR: 8:00 PM
 -------------------------------------------
-Name: Aidan McDonald
-Location: cushing room 303 (logic design)
-Time: 12:00 PM to 2:00 PM
-Number of people: 6
+Name: Clark Kent
+Location: cushing room 217 (eg lounge)
+Time: 10:00 PM to 11:00 PM
+Number of people: 1
+Location capacity: 24
 
 

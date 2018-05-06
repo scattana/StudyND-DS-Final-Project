@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <stdexcept>
 #include <unordered_map>
+#include <vector>
 
 #include "booking.h"
 #include "circular_linked_list.h"
@@ -54,6 +55,7 @@ private:
         size_t          num_items;
         Room*           table;
         double          max_load_factor;
+        std::vector<Room *> toDelete;
 };
 
 // vim: set sts=4 sw=4 ts=8 expandtab ft=cpp:
