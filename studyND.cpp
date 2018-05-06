@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <cerrno>
 #include <cstring>
-//#include "roomMap.h"			// For the new library syste, include both of these .h files
+#include "roomMap.cpp"			// For the new library syste, include both of these .h files
 #include "booking.h"
 using namespace std;
 
@@ -335,8 +335,7 @@ void receipt(Booking b){
 
 int main(int argc, char* argv[]){
 	// FIRST STEP: load booking data (current reservation schedule)
-	//RoomMap myMap;
-//	unordered_map<string, RoomMap> myMap;
+	unordered_map<string, RoomMap> myMap;
 
 	// -----------------------------------------
 	// now parse command line options
@@ -362,7 +361,7 @@ int main(int argc, char* argv[]){
 		// try to add new <building, RoomMap> entry to the unordered_map
 		// if the key already exists, call "book" function on the building
 		// and pass Booking object. If the key doesn't exist, map "building"
-/*		// to a new RoomMap object, then call "book" with the booking object
+		// to a new RoomMap object, then call "book" with the booking object
 		auto found = myMap.find(b.building);
 		if(found== myMap.end()){		// key was not found
 			RoomMap r;
@@ -372,7 +371,7 @@ int main(int argc, char* argv[]){
 		else{							// key was found
 			// TODO: CALL "book"
 		}
-*/
+
 		// print "receipt" of booking to text file in current directory
 		receipt(b);
 	}

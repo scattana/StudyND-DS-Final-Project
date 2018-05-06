@@ -10,6 +10,16 @@ ARFLAGS=  		rcs
 
 all: 			studyND test-room
 
+bad: 			bad-studyND bad-test-room
+	#This is the #include-tree method- NEVER USE THIS!!!!!
+
+bad-studyND:		studyND.cpp
+	@$(CC) $(CFLAGS) -o studyND $^
+
+bad-test-room:		testRoom.cpp
+	@$(CC) $(CFLAGS) -o test-room $^
+
+
 test-room:		testRoom.o libroom.a
 	@echo Linking $@
 	@$(LD) $(LDFLAGS) -static -o $@ $^

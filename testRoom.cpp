@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <cerrno>
 #include <cstring>
-#include "roomMap.h"
+#include "roomMap.cpp"
 #include "booking.h"
 
 int main(int argv, char *argc[]) {
