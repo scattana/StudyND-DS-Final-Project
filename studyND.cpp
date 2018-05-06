@@ -331,7 +331,7 @@ void receipt(Booking b){
 	out << "-------------------------------------------" << endl;
 	out << "Name: " << b.f_name << " " << b.l_name << endl;
 	out << "Location: " << b.building << " " << b.location << endl;
-	out << "Time: " << formatTime(b.s_time) << " to " << formatTime(b.e_time) << endl;
+	out << "Time: " << formatTime(b.s_time + get_hour()) << " to " << formatTime(b.e_time + get_hour()) << endl;
 	out << "Number of people: " << b.num_people << endl;
 	out << "Location capacity: " << b.capacity << endl;
 	out << "\n" << endl;
