@@ -190,6 +190,12 @@ Booking newBooking(size_t current_hour){
 
 	// assign status to booking and return
 	booking.status = stat;
+
+	// now reverse the adding current hour to s_time of the Booking struct
+	// in order to pass to circular_linked_list later on:
+	booking.s_time -= get_hour();
+	booking.e_time -= get_hour();
+
 	return booking;
 }
 
