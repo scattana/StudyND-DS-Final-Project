@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <cerrno>
 #include <cstring>
-#include "roomMap.cpp"			// For the new library syste, include both of these .h files
+//#include "roomMap.cpp"			// For the new library syste, include both of these .h files
 #include "booking.h"
 using namespace std;
 
@@ -175,12 +175,16 @@ Booking newBooking(size_t current_hour){
 	while(!(lower_str(c)=="y" || lower_str(c)=="n")){
 		cout << "\nPlease type either 'y' or 'n' or type \"q\" to exit: ";
 		getline(cin, c);
-		if(lower_str(c)=="q") exit(0);
+		if(lower_str(c)=="q"){
+			stat = -1;
+			booking.status = stat;
+			return booking;
+		}
 	}
 
 	if(lower_str(c)=="n"){
 		cout << "\nYour booking was not confirmed. Leaving studyND\n" << endl;
-		exit(0);
+		stat = -1;
 	}
 	else cout << "\nYour booking was confirmed! Thank you for using studyND\n" << endl;
 
@@ -210,7 +214,7 @@ void printBooking(Booking b){
 // Utility function to format time output
 string formatTime(size_t t){
 	string mod;
-	if((int)t / 12 == 0) mod = "AM";
+	if((int)t % 24 < 12) mod = "AM";
 	else mod = "PM";
 	int hour = t;	// truncate decimal
 	hour = (int)t % 12;
@@ -335,7 +339,7 @@ void receipt(Booking b){
 
 int main(int argc, char* argv[]){
 	// FIRST STEP: load booking data (current reservation schedule)
-	unordered_map<string, RoomMap> myMap;
+//	unordered_map<string, RoomMap> myMap;
 
 	// -----------------------------------------
 	// now parse command line options
@@ -360,7 +364,7 @@ int main(int argc, char* argv[]){
 
 		// try to add new <building, RoomMap> entry to the unordered_map
 		// if the key already exists, call "book" function on the building
-		// and pass Booking object. If the key doesn't exist, map "building"
+/*		// and pass Booking object. If the key doesn't exist, map "building"
 		// to a new RoomMap object, then call "book" with the booking object
 		auto found = myMap.find(b.building);
 		if(found== myMap.end()){		// key was not found
@@ -371,7 +375,7 @@ int main(int argc, char* argv[]){
 		else{							// key was found
 			// TODO: CALL "book"
 		}
-
+*/
 		// print "receipt" of booking to text file in current directory
 		receipt(b);
 	}
