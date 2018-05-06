@@ -1,0 +1,16 @@
+EG Library (1st Floor)
+36
+EE Corridor (2nd Floor)
+24
+3rd Floor Cubicle #1
+4
+3rd Floor Cubicle #2
+4
+3rd Floor Cubicle #3
+4
+3rd Floor Cubicle #4
+4
+3rd Floor Cubicle #5
+4
+3rd Floor Cubicle #6
+4

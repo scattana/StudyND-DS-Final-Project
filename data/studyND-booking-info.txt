@@ -1,0 +1,8 @@
+YOUR studyND BOOKING MADE AT HOUR: 9:00 PM
+-------------------------------------------
+Name: Aidan McDonald
+Location: cushing room 303 (logic design)
+Time: 12:00 PM to 2:00 PM
+Number of people: 6
+
+
