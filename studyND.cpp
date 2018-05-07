@@ -17,6 +17,8 @@
 #include <cstring>
 #include "roomMap.cpp"			// For the new library syste, include both of these .h files
 #include "booking.h"
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
 using namespace std;
 
 string Root = "data/";
@@ -322,16 +324,12 @@ size_t get_capacity(string temp, size_t loc){
 
 
 RoomMap * load(){
-	//if(system("scripts/load.py") < 0)
-		//return EXIT_FAILURE;
 	FILE* fp = fopen("/tmp/input.txt","r");
 	string name;
 	oldRmMap orm;
 	string year, month, day, hour;
 	while(cin >> name){
 		schedule s;
-		string temp;
-		cin >> temp >> temp >> temp >> temp;
 		cin >> s.cap;
 		for(int i = 0;i < 48;i++){
 			cin >> s.times[i];
@@ -341,7 +339,9 @@ RoomMap * load(){
 	}
 	fclose(fp);
 	unlink("/tmp/input.txt");
-	return new RoomMap(orm, 0); //UPDATE THIS- second term should be file's time_t
+	boost::filesystem::path filePath = "data/schedule.json";
+    time_t writeTime = boost::filesystem::last_write_time(filePath);
+	return new RoomMap(orm, writeTime);
 }
 
 // -----------------------------------------------
