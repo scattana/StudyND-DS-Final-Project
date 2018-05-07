@@ -351,9 +351,9 @@ bool save(unordered_map<string, RoomMap *> &curr) {
 	ofstream outFile;
 	outFile.open("data/schedule.txt");
 	for(auto it = curr.begin(); it != curr.end(); it++){
-		outFile << it->second.num_rooms() << std::endl;
+		outFile << it->second->num_rooms() << std::endl;
 		outFile << it->first << std::endl;
-		it->second.dump(outFile);	
+		it->second->dump(outFile);	
 	}
 	outFile.close();
 }
