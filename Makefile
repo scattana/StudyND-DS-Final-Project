@@ -10,6 +10,10 @@ ARFLAGS=  		rcs
 
 all: 			studyND test-room
 
+test:
+	@echo Testing studyND......
+	@./test_studyND.py
+
 bad: 			bad-studyND bad-test-room
 	#This is the #include-tree method- NEVER USE THIS!!!!!
 
@@ -49,4 +53,5 @@ circular_list.o: 	circular_linked_list.cpp
 	@$(CC) $(CFLAGS) -o $@ $^ -c
 
 clean:
+	@echo Cleaning studyND...
 	@rm -f *.o *.a studyND test-room
