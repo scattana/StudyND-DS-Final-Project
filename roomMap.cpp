@@ -9,6 +9,9 @@
 #include <stdexcept>
 #include <chrono>
 #include <ctime>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #include "circular_linked_list.cpp"
 #include "roomMap.h"
