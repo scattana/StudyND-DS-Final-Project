@@ -339,9 +339,23 @@ RoomMap * load(){
 	}
 	fclose(fp);
 	unlink("/tmp/input.txt");
-	boost::filesystem::path filePath = "data/schedule.json";
-    time_t writeTime = boost::filesystem::last_write_time(filePath);
+	//boost::filesystem::path filePath = "data/schedule.json";
+    	//time_t writeTime = boost::filesystem::last_write_time(filePath);
+	struct stat s;
+	stat("/data/schedule.txt", &s);
+	time_t writeTime = s.st_mtim.tv_sec;
 	return new RoomMap(orm, writeTime);
+}
+
+bool save(unordered_map<string, RoomMap *> &curr) {
+	ofstream outFile;
+	outFile.open("data/schedule.txt");
+	for(auto it = curr.begin(); it != curr.end(); it++){
+		outFile << it->second.num_rooms() << std::endl;
+		outFile << it->first << std::endl;
+		it->second.dump(outFile);	
+	}
+	outFile.close();
 }
 
 // -----------------------------------------------
