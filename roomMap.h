@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <unordered_map>
 #include <vector>
+#include <chrono>
 
 #include "booking.h"
 #include "circular_linked_list.h"
@@ -39,7 +40,7 @@ class RoomMap {
 public:
         RoomMap();                                      // default constructor
         RoomMap(size_t, double);        		// constructor
-        RoomMap(oldRmMap);                              // .txt initialization constructor
+        RoomMap(oldRmMap, time_t);                      // .txt initialization constructor
         ~RoomMap();                                     // destructor
 
         bool book(Booking &entry); //Function to book a time in a room; calls insert as needed.
@@ -49,6 +50,8 @@ public:
         void            dump(std::ostream &os);
 
 private:
+        void            update_schedules();
+        time_t          lastUpdate;
         size_t          locate(const std::string &key); //Pre-written function, returns either the bucket corresponding to that key, the next open bucket, or the table size if the table is full
         void            resize(const size_t new_size); //All this is pre-written
         size_t          table_size;
