@@ -96,8 +96,7 @@ bool List::reserve(Booking *b){
 	return false;
 }
 void List::dump(std::ostream &os){
-	size_t hour=0;
 	for(Node *t = head;t != nullptr;t=t->next){
-		os << hour++ << "- " << t->people << ':' << t->names << std::endl;
+		os << "- " << t->people << ':' << t->names << std::endl;
 	}
 }

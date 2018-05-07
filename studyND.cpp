@@ -358,7 +358,7 @@ RoomMap * load(){
 	}
 	fclose(fp);
 	unlink("/tmp/input.txt");
-	return new RoomMap(orm);
+	return new RoomMap(orm, 0); //UPDATE THIS- second term should be file's time_t
 }
 
 // -----------------------------------------------

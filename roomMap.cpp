@@ -70,9 +70,17 @@ RoomMap::RoomMap(oldRmMap oldMap, time_t age){
     std::chrono::duration<int,std::ratio<60*60*24>> one_day (1);
     std::chrono::system_clock::time_point today = std::chrono::system_clock::now();
     lastUpdate = std::chrono::system_clock::to_time_t (today);
-    
+    int numHours = (lastUpdate - age)/3600;
+
     for(auto it = oldMap.begin(); it != oldMap.end(); it++){
-        List *NewList = new List(it->second.times, it->second.names);
+        List *NewList;
+        if(numHours > 47)
+            NewList = new List;
+        else{
+            NewList = new List(it->second.times, it->second.names);
+            for(int c=0; c<numHours; c++)
+                NewList->rotate();
+        }
         Room *NewRoom = new Room{it->first, it->second.cap, NewList};
         toDelete.push_back(NewRoom);
         insert(*NewRoom);
