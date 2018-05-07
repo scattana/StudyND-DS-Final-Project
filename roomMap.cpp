@@ -56,7 +56,6 @@ RoomMap::RoomMap(size_t t_size, double l_factor){
     resize(t_size);
     std::chrono::duration<int,std::ratio<60*60*24>> one_day (1);
     std::chrono::system_clock::time_point today = std::chrono::system_clock::now();
-    lastUpdate = std::chrono::system_clock::to_time_t (today);
 }
 
 
@@ -69,7 +68,7 @@ RoomMap::RoomMap(oldRmMap oldMap, time_t age){
 
     std::chrono::duration<int,std::ratio<60*60*24>> one_day (1);
     std::chrono::system_clock::time_point today = std::chrono::system_clock::now();
-    lastUpdate = std::chrono::system_clock::to_time_t (today);
+    time_t lastUpdate = std::chrono::system_clock::to_time_t (today);
     int numHours = (lastUpdate - age)/3600;
 
     for(auto it = oldMap.begin(); it != oldMap.end(); it++){
@@ -104,6 +103,10 @@ RoomMap::~RoomMap(){
     for(int c=0; c<temp; c++) delete toDelete[c];
     delete[] table;
     //std::cout << "Ran delete command\n";
+}
+
+size_t RoomMap::num_rooms(){
+    return num_items; 
 }
 
 //Custom booking function- handles insertion as needed as well as booking
@@ -166,9 +169,9 @@ const Room RoomMap::search(const std::string &key) {
 void RoomMap::dump(std::ostream &os) {
     for(size_t i=0; i<table_size; i++){
 	if(table[i] != NONE){
-            os << table[i].roomNum << ", capacity: " << table[i].capacity << std::endl;
+            os << table[i].roomNum << std::endl;
+            os << table[i].capacity << std::endl;
             table[i].times->dump(os);
-            os << std::endl;
 	}
     }
 }
