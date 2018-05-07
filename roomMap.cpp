@@ -7,6 +7,9 @@
 #include <vector>
 #include <unistd.h>
 #include <stdexcept>
+#include <chrono>
+#include <ctime>
+
 #include "circular_linked_list.cpp"
 #include "roomMap.h"
 
@@ -46,20 +49,27 @@ RoomMap::RoomMap(){
 
 // parameter-based constructor
 RoomMap::RoomMap(size_t t_size, double l_factor){
-	table_size = 0;
-	max_load_factor = l_factor;
-	num_items = 0;
-        table = nullptr;
-	resize(t_size);
+    table_size = 0;
+    max_load_factor = l_factor;
+    num_items = 0;
+    table = nullptr;
+    resize(t_size);
+    std::chrono::duration<int,std::ratio<60*60*24>> one_day (1);
+    std::chrono::system_clock::time_point today = std::chrono::system_clock::now();
+    lastUpdate = std::chrono::system_clock::to_time_t (today);
 }
 
 
-RoomMap::RoomMap(oldRmMap oldMap){
+RoomMap::RoomMap(oldRmMap oldMap, time_t age){
     table_size = 0;
     max_load_factor = DEFAULT_LOAD_FACTOR;
     num_items = 0;
     table = nullptr;
     resize(DEFAULT_TABLE_SIZE);
+
+    std::chrono::duration<int,std::ratio<60*60*24>> one_day (1);
+    std::chrono::system_clock::time_point today = std::chrono::system_clock::now();
+    lastUpdate = std::chrono::system_clock::to_time_t (today);
     
     for(auto it = oldMap.begin(); it != oldMap.end(); it++){
         List *NewList = new List(it->second.times, it->second.names);

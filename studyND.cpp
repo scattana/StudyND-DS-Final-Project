@@ -238,13 +238,13 @@ void system(unordered_map<string, Booking> &booking){
 
 // Utility function that gets the current time using system_clock (C++11)
 // and returns a size_t corresponding to the current hour
-size_t get_hour(){
+/*size_t get_hour(){
  	chrono::duration<int,ratio<60*60*24>> one_day (1);
     chrono::system_clock::time_point today = chrono::system_clock::now();
     time_t tt = chrono::system_clock::to_time_t (today);
     const char hr[3] = {ctime(&tt)[11], ctime(&tt)[12], '\0'};
     return (size_t)stoi(hr);
-}
+}*/
 
 // Utility function to print the rooms and capacities for a specified building
 int printRooms(string temp){
@@ -338,6 +338,28 @@ void receipt(Booking b){
 	out.close();
 }
 
+RoomMap * load(){
+	//if(system("scripts/load.py") < 0)
+		//return EXIT_FAILURE;
+	FILE* fp = fopen("/tmp/input.txt","r");
+	string name;
+	oldRmMap orm;
+	string year, month, day, hour;
+	while(cin >> name){
+		schedule s;
+		string temp;
+		cin >> temp >> temp >> temp >> temp;
+		cin >> s.cap;
+		for(int i = 0;i < 48;i++){
+			cin >> s.times[i];
+			cin >> s.names[i];
+		}
+		orm.insert(make_pair(name, s));
+	}
+	fclose(fp);
+	unlink("/tmp/input.txt");
+	return new RoomMap(orm);
+}
 
 // -----------------------------------------------
 //               MAIN FUNCTION
