@@ -13,3 +13,11 @@ struct Booking{
 	size_t capacity;		// room's capacity (assigned after input)
 	int status;				// status used to create booking struct, in main
 };
+
+typedef struct {
+        size_t times[48];
+        std::string names[48];
+        size_t cap;
+} schedule;
+
+typedef std::unordered_map<std::string, schedule> oldRmMap;

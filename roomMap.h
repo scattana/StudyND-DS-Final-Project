@@ -18,13 +18,13 @@ typedef std::hash<std::string>  StringHasher;
 const double DEFAULT_LOAD_FACTOR = 0.6; //extern?
 const size_t DEFAULT_TABLE_SIZE = 20; //extern?
 
-typedef struct {
+/*typedef struct {
         size_t times[48];
         std::string names[48];
         size_t cap;
 } schedule;
 typedef std::unordered_map<std::string, schedule> oldRmMap;
-
+*/
 struct Room{
     std::string roomNum;
     size_t capacity;
