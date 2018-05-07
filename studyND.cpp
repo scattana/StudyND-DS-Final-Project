@@ -338,6 +338,28 @@ void receipt(Booking b){
 	out.close();
 }
 
+RoomMap * load(){
+	//if(system("scripts/load.py") < 0)
+		//return EXIT_FAILURE;
+	FILE* fp = fopen("/tmp/input.txt","r");
+	string name;
+	oldRmMap orm;
+	string year, month, day, hour;
+	while(cin >> name){
+		schedule s;
+		string temp;
+		cin >> temp >> temp >> temp >> temp;
+		cin >> s.cap;
+		for(int i = 0;i < 48;i++){
+			cin >> s.times[i];
+			cin >> s.names[i];
+		}
+		orm.insert(make_pair(name, s));
+	}
+	fclose(fp);
+	unlink("/tmp/input.txt");
+	return new RoomMap(orm);
+}
 
 // -----------------------------------------------
 //               MAIN FUNCTION
