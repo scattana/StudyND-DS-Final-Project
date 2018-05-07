@@ -11,8 +11,9 @@ ARFLAGS=  		rcs
 all: 			studyND test-room
 
 test:
-	@echo Testing memory...
-	@[ `valgrind --leak-check=full ./studyND -n < input1 2>&1 | grep ERROR | awk '{print $$4}'` = 0 ]
+	@echo Testing memory and output...
+	@./test_studyND.sh
+	
 
 bad: 			bad-studyND bad-test-room
 	#This is the #include-tree method- NEVER USE THIS!!!!!
