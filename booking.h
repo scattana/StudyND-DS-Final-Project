@@ -1,5 +1,16 @@
 #pragma once
 #include <string>
+#include <chrono>
+#include <ctime>
+#include <unordered_map>
+
+size_t get_hour(){
+    std::chrono::duration<int,std::ratio<60*60*24>> one_day (1);
+    std::chrono::system_clock::time_point today = std::chrono::system_clock::now();
+    time_t tt = std::chrono::system_clock::to_time_t (today);
+    const char hr[3] = {ctime(&tt)[11], ctime(&tt)[12], '\0'};
+    return (size_t)std::stoi(hr);
+}
 
 struct Booking{
 	std::string building;	// building name

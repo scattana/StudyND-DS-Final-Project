@@ -238,13 +238,13 @@ void system(unordered_map<string, Booking> &booking){
 
 // Utility function that gets the current time using system_clock (C++11)
 // and returns a size_t corresponding to the current hour
-size_t get_hour(){
+/*size_t get_hour(){
  	chrono::duration<int,ratio<60*60*24>> one_day (1);
     chrono::system_clock::time_point today = chrono::system_clock::now();
     time_t tt = chrono::system_clock::to_time_t (today);
     const char hr[3] = {ctime(&tt)[11], ctime(&tt)[12], '\0'};
     return (size_t)stoi(hr);
-}
+}*/
 
 // Utility function to print the rooms and capacities for a specified building
 int printRooms(string temp){
