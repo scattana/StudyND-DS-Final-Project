@@ -19,10 +19,6 @@ for key in keys:
 	print(key)
 	curr = data[key.rstrip()]
 	write_file.write(str(key[:-1])+'\n')
-	write_file.write(str(curr['year'])+'\n')
-	write_file.write(str(curr['month'])+'\n')
-	write_file.write(str(curr['day'])+'\n')
-	write_file.write(str(curr['hour'])+'\n')
 	write_file.write(str(curr['capacity'])+'\n')
 	for i in range(48):
 		write_file.write(str(curr['hour{}'.format(i+1)]['people'])+'\n')

@@ -1,9 +1,5 @@
 {
 	"Room 217 (EG Lounge)":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":24,
 		"hour1":{
 			"people":0,
@@ -199,10 +195,6 @@
 		}
 	},
 	"Room 303 (Logic Design)":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":20,
 		"hour1":{
 			"people":0,
@@ -398,10 +390,6 @@
 		}
 	},
 	"EG Library (1st Floor)":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":36,
 		"hour1":{
 			"people":0,
@@ -597,10 +585,6 @@
 		}
 	},
 	"EE Corridor (2nd Floor)":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":24,
 		"hour1":{
 			"people":0,
@@ -796,10 +780,6 @@
 		}
 	},
 	"3rd Floor Cubicle #1":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
@@ -995,10 +975,6 @@
 		}
 	},
 	"3rd Floor Cubicle #2":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
@@ -1194,10 +1170,6 @@
 		}
 	},
 	"3rd Floor Cubicle #3":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
@@ -1393,10 +1365,6 @@
 		}
 	},
 	"3rd Floor Cubicle #4":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
@@ -1592,10 +1560,6 @@
 		}
 	},
 	"3rd Floor Cubicle #5":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
@@ -1791,10 +1755,6 @@
 		}
 	},
 	"3rd Floor Cubicle #6":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
@@ -1990,10 +1950,6 @@
 		}
 	},
 	"Hagerty Cafe Tables":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":30,
 		"hour1":{
 			"people":0,
@@ -2189,10 +2145,6 @@
 		}
 	},
 	"North End Lounge":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":22,
 		"hour1":{
 			"people":0,
@@ -2388,10 +2340,6 @@
 		}
 	},
 	"Midfield Commons":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":40,
 		"hour1":{
 			"people":0,
@@ -2587,10 +2535,6 @@
 		}
 	},
 	"Welcome Desk Lounge":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":28,
 		"hour1":{
 			"people":0,
@@ -2786,10 +2730,6 @@
 		}
 	},
 	"Innovation Lounge":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":24,
 		"hour1":{
 			"people":0,
@@ -2985,10 +2925,6 @@
 		}
 	},
 	"Study Room Number 1":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
@@ -3184,10 +3120,6 @@
 		}
 	},
 	"Study Room Number 2":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
@@ -3383,10 +3315,6 @@
 		}
 	},
 	"Study Room Number 3":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
@@ -3582,10 +3510,6 @@
 		}
 	},
 	"Study Room Number 4":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
@@ -3781,10 +3705,6 @@
 		}
 	},
 	"Study Room Number 5":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
@@ -3980,10 +3900,6 @@
 		}
 	},
 	"Study Room Number 6":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
@@ -4179,10 +4095,6 @@
 		}
 	},
 	"Study Room Number 7":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
@@ -4378,10 +4290,6 @@
 		}
 	},
 	"Study Room Number 8":{
-		"year":2018,
-		"month":5,
-		"day":5,
-		"hour":21,
 		"capacity":4,
 		"hour1":{
 			"people":0,
