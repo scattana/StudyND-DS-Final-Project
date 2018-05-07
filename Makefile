@@ -1,12 +1,7 @@
-CC=			g++
+CC=				g++
 CFLAGS=			-std=c++11 -fPIC -g
 TARGETS=		studyND
-LD=       		g++
-#LIBDIR=			$(shell locate libc.a | rev | cut -d/ -f2- | rev)/
-#LDFLAGS=		-L/$(LIBDIR) -L.
-LDFLAGS=  		-L/usr/lib/x86_64-redhat-linux5E/lib64 -L.
-AR=       		ar
-ARFLAGS=  		rcs
+
 
 
 all: 			studyND
