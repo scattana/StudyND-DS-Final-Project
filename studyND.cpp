@@ -32,7 +32,6 @@ string formatTime(size_t);						// in 12-hour format
 void system(unordered_map<string, Booking>&);	// reservation system w/HM
 size_t get_hour();								// from system_clock
 size_t get_capacity(string, size_t);			// from spec. bldg, room
-void receipt(Booking);							// outputs booking->txt file
 
 // ----------------------------------------------------------------------------
 //            UTILITY FUNCTIONS FOR studyND MAIN EXECUTION
@@ -187,7 +186,6 @@ Booking newBooking(size_t current_hour){
 		cout << "\nYour booking was not confirmed. Leaving studyND\n" << endl;
 		stat = -1;
 	}
-	else cout << "\nYour booking was confirmed! Thank you for using studyND\n" << endl;
 
 	// assign status to booking and return
 	booking.status = stat;
@@ -323,21 +321,6 @@ size_t get_capacity(string temp, size_t loc){
 }
 
 
-// Utility function to "print" a receipt of a booking to a text file
-// in the user's current directory
-void receipt(Booking b){
-	ofstream out("studyND-booking-info.txt");
-	out << "YOUR studyND BOOKING MADE AT HOUR: " << formatTime(get_hour()) << endl;
-	out << "-------------------------------------------" << endl;
-	out << "Name: " << b.f_name << " " << b.l_name << endl;
-	out << "Location: " << b.building << " " << b.location << endl;
-	out << "Time: " << formatTime(b.s_time + get_hour()) << " to " << formatTime(b.e_time + get_hour()) << endl;
-	out << "Number of people: " << b.num_people << endl;
-	out << "Location capacity: " << b.capacity << endl;
-	out << "\n" << endl;
-	out.close();
-}
-
 RoomMap * load(){
 	//if(system("scripts/load.py") < 0)
 		//return EXIT_FAILURE;
@@ -405,8 +388,6 @@ int main(int argc, char* argv[]){
 		}
 
 		myMap[b.building]->dump(cout);
-		// print "receipt" of booking to text file in current directory
-		receipt(b);
 		for(auto c = myMap.begin(); c != myMap.end(); c++) delete c->second;
 	}
 

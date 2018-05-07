@@ -1,9 +1,0 @@
-YOUR studyND BOOKING MADE AT HOUR: 9:00 PM
--------------------------------------------
-Name: Clark Kent
-Location: cushing room 217 (eg lounge)
-Time: 10:00 PM to 11:00 PM
-Number of people: 1
-Location capacity: 24
-
-
