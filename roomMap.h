@@ -49,9 +49,9 @@ public:
         void            insert(const Room &input); //Standard insert / dump
         void            dump(std::ostream &os);
 
+        size_t          num_rooms();
+
 private:
-        void            update_schedules();
-        time_t          lastUpdate;
         size_t          locate(const std::string &key); //Pre-written function, returns either the bucket corresponding to that key, the next open bucket, or the table size if the table is full
         void            resize(const size_t new_size); //All this is pre-written
         size_t          table_size;
