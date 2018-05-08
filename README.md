@@ -13,6 +13,25 @@ against expected output
 * To view usage instructions for studyND, run `studyND -h` and follow the 
 provided instructions
 
+INDIVIDUAL CONTRIBUTIONS AND TEAM STRUCTURE
+--------------------------------------------------
+* Aidan: implemented RoomMap, the custom open addressing hash map; worked 
+with I/O for loading and saving reservation state; implemented view option 
+for studyND main driver; helped develop booking.h structure
+* Michael: implemented circular linked list custom class; worked with I/O 
+loading and saving for reservation state; wrote scripts for debugging and 
+parsing reservation information
+* Seth: implemented the studyND main driver and the new booking capability, 
+using Aidan's and Michael's custom classes to map buildings to a Booking 
+struct; helped write the Makefile and wrote the shell script for memory and 
+output testing; wrote the utility functions in studyND to manage I/O from 
+user and from data files
+* Team structure: after writing the initial pieces (i.e. main driver and two 
+custom data structures), the team debugged together/in-personfor most of the 
+project. Smaller tasks were accepted and completed on a need-be basis, and 
+generally completed by the individual whose previous contributions most 
+strongly related to the task at hand.
+
 
 
 FILE INFORMATION
