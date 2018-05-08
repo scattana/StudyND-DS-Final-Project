@@ -48,6 +48,7 @@ public:
 
         void            insert(const Room &input); //Standard insert / dump
         void            dump(std::ostream &os);
+        void            listRooms();
 
         size_t          num_rooms();
 
