@@ -328,7 +328,7 @@ size_t get_capacity(string temp, size_t loc){
 
 unordered_map<string, RoomMap *>* load(){
 	struct stat st;
-	stat("/data/schedule.txt", &st);
+	stat("./data/schedule.txt", &st);
 	time_t writeTime = st.st_mtim.tv_sec;
 	ifstream fp;
 	fp.open("./data/schedule.txt");
