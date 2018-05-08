@@ -2,9 +2,18 @@
 A software program to reserve and manage study locations across the University of Notre Dame.
 Implemented in C/C++ with bash testing scripts and a Makefile
 
+USER INFORMATION (building + running the project)
+--------------------------------------------------
+* To compile and build all files, download all project files into the same 
+directory and run `make`. This will generate a `studyND` executable
+* To test program output and memory, run `make test`. This will execute a 
+shell script that checks valgrind for memory errors and checks sample inputs 
+against expected output
+
+
 
 FILE INFORMATION
--------------------------------------------
+--------------------------------------------------
 	
 ### studyND.cpp
 	Main driver for studyND project. C++ implementation. Contains functions 
