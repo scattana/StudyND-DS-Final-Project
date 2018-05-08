@@ -17,6 +17,9 @@
 #include <cstring>
 #include "roomMap.cpp"			// For the new library syste, include both of these .h files
 #include "booking.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 //#include <boost/filesystem.hpp>
 //#include <boost/filesystem/fstream.hpp>
 using namespace std;
@@ -322,35 +325,39 @@ size_t get_capacity(string temp, size_t loc){
 	return (size_t)(stoi(name));
 }
 
-
-RoomMap * load(){
-	FILE* fp = fopen("/tmp/input.txt","r");
-	string name;
-	oldRmMap orm;
-	string year, month, day, hour;
-	while(cin >> name){
-		schedule s;
-		cin >> s.cap;
-		for(int i = 0;i < 48;i++){
-			cin >> s.times[i];
-			cin >> s.names[i];
-		}
-		orm.insert(make_pair(name, s));
+unordered_map<string, RoomMap *>* load(){
+	struct stat st;
+	stat("/data/schedule.txt", &st);
+	time_t writeTime = st.st_mtim.tv_sec;
+	FILE* fp = fopen("./data/schedule.txt","r");
+	unordered_map<string, RoomMap *> *mp = new unordered_map<string, RoomMap *>;
+	if(!fp) return mp;
+	int buildings;
+	while(cin >> buildings){
+		string building_name;
+		cin >> building_name;
+		oldRmMap orm;
+		for(int i = 0;i < buildings;i++){
+			string room_name;
+			cin >> room_name;
+			schedule s;
+			cin >> s.cap;
+			for(int i = 0;i < 48;i++){
+				cin >> s.times[i];
+				cin >> s.names[i];
+			}
+			orm.insert(make_pair(room_name, s));
+		}	
+		mp->insert(make_pair(building_name, new RoomMap(orm, writeTime)));
 	}
 	fclose(fp);
-	unlink("/tmp/input.txt");
-	//boost::filesystem::path filePath = "data/schedule.json";
-    	//time_t writeTime = boost::filesystem::last_write_time(filePath);
-	struct stat s;
-	stat("/data/schedule.txt", &s);
-	time_t writeTime = s.st_mtim.tv_sec;
-	return new RoomMap(orm, writeTime);
+	return mp;
 }
 
-bool save(unordered_map<string, RoomMap *> &curr) {
+bool save(unordered_map<string, RoomMap *> *curr) {
 	ofstream outFile;
 	outFile.open("data/schedule.txt");
-	for(auto it = curr.begin(); it != curr.end(); it++){
+	for(auto it = curr->begin(); it != curr->end(); it++){
 		outFile << it->second->num_rooms() << std::endl;
 		outFile << it->first << std::endl;
 		it->second->dump(outFile);	
@@ -364,7 +371,7 @@ bool save(unordered_map<string, RoomMap *> &curr) {
 
 int main(int argc, char* argv[]){
 	// FIRST STEP: load booking data (current reservation schedule)
-	unordered_map<string, RoomMap *> myMap;
+	unordered_map<string, RoomMap *> *myMap;
 
 	// -----------------------------------------
 	// now parse command line options
@@ -391,18 +398,19 @@ int main(int argc, char* argv[]){
 		// if the key already exists, call "book" function on the building
 		// and pass Booking object. If the key doesn't exist, map "building"
 		// to a new RoomMap object, then call "book" with the booking object
-		auto found = myMap.find(b.building);
-		if(found== myMap.end()){		// key was not found
+		auto found = myMap->find(b.building);
+		if(found== myMap->end()){		// key was not found
 			RoomMap *r = new RoomMap;
-			myMap.insert(pair<string, RoomMap *>(b.building, r));
-			myMap[b.building]->book(b);
+			myMap->insert(pair<string, RoomMap *>(b.building, r));
+			(*myMap)[b.building]->book(b);
 		}
 		else{							// key was found
-			myMap[b.building]->book(b);
+			(*myMap)[b.building]->book(b);
 		}
 
-		myMap[b.building]->dump(cout);
-		for(auto c = myMap.begin(); c != myMap.end(); c++) delete c->second;
+		save(myMap);
+		for(auto c = myMap->begin(); c != myMap->end(); c++) delete c->second;
+		delete myMap;
 	}
 
 	return EXIT_SUCCESS;
