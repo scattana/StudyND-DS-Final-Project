@@ -10,7 +10,7 @@ const size_t NTIMES = 48;
 class List {
         public:
                 List();
-                List(size_t times[NTIMES],std::string names[NTIMES]);
+                List(size_t times[NTIMES]);
                 ~List();
                 size_t rotate();
                 bool isFull(Booking *b);
@@ -19,7 +19,6 @@ class List {
         private:
                 struct Node{
                         size_t                  people;
-                        std::string             names;
                         Node                    *next;
                 };
                 Node *head;

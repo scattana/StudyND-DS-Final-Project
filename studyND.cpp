@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------
 
 #include <iostream>
+#include <string>
 #include <chrono>
 #include <unordered_map>
 #include <unordered_set>
@@ -256,7 +257,7 @@ int printRooms(string temp){
 	ifstream ifs;
 	if(temp=="cushing") ifs.open((Root+"cushing.txt").c_str(), ifstream::in);
 	else if(temp=="fitzpatrick") ifs.open((Root+"fitzpatrick.txt").c_str(), ifstream::in);
-	else if(temp=="duncan student center") ifs.open((Root+"duncan.txt").c_str(), ifstream::in);
+	else if(temp=="dustu") ifs.open((Root+"dustu.txt").c_str(), ifstream::in);
 	else if(temp=="stinson-remick") ifs.open((Root+"stinson.txt").c_str(), ifstream::in);
 	else{
 		cout << "Building " << temp << " was not found. Leaving studyND" << endl;
@@ -329,28 +330,35 @@ unordered_map<string, RoomMap *>* load(){
 	struct stat st;
 	stat("/data/schedule.txt", &st);
 	time_t writeTime = st.st_mtim.tv_sec;
-	FILE* fp = fopen("./data/schedule.txt","r");
+	ifstream fp;
+	fp.open("./data/schedule.txt");
+	//FILE* fp = fopen("./data/schedule.txt","r");
 	unordered_map<string, RoomMap *> *mp = new unordered_map<string, RoomMap *>;
 	if(!fp) return mp;
 	int buildings;
-	while(cin >> buildings){
+	while(fp >> buildings){
+		//cout << "Looping for buildings\n";
 		string building_name;
-		cin >> building_name;
+		fp >> building_name;
+		//getline(fp, building_name);
+		//cout << building_name << endl;
 		oldRmMap orm;
 		for(int i = 0;i < buildings;i++){
 			string room_name;
-			cin >> room_name;
-			schedule s;
-			cin >> s.cap;
+			fp >> room_name;
+			//cout << room_name << endl;
+			schedule *s = new schedule;
+			fp >> s->cap;
+			//cout << capacity << endl;
 			for(int i = 0;i < 48;i++){
-				cin >> s.times[i];
-				cin >> s.names[i];
+				fp >> s->times[i];
+				//cout << s->times[i] << endl;
 			}
 			orm.insert(make_pair(room_name, s));
 		}	
 		mp->insert(make_pair(building_name, new RoomMap(orm, writeTime)));
 	}
-	fclose(fp);
+	fp.close();
 	return mp;
 }
 
@@ -358,6 +366,7 @@ bool save(unordered_map<string, RoomMap *> *curr) {
 	ofstream outFile;
 	outFile.open("data/schedule.txt");
 	for(auto it = curr->begin(); it != curr->end(); it++){
+		//cout << "Dumping building " << it->first << std::endl;
 		outFile << it->second->num_rooms() << std::endl;
 		outFile << it->first << std::endl;
 		it->second->dump(outFile);	

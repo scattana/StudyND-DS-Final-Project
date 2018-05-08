@@ -1,17 +1,17 @@
-Study Room Number 1
+Study_Room_1
 4
-Study Room Number 2
+Study_Room_2
 4
-Study Room Number 3
+Study_Room_3
 4
-Study Room Number 4
+Study_Room_4
 4
-Study Room Number 5
+Study_Room_5
 4
-Study Room Number 6
+Study_Room_6
 4
-Study Room Number 7
+Study_Room_7
 4
-Study Room Number 8
+Study_Room_8
 4
 

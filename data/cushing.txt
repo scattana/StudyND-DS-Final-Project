@@ -1,4 +1,4 @@
-Room 217 (EG Lounge)
+Room_217_EG_Lounge
 24
-Room 303 (Logic Design)
+Room_303_Logic_Design
 20

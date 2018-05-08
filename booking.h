@@ -27,8 +27,7 @@ struct Booking{
 
 typedef struct {
         size_t times[48];
-        std::string names[48];
         size_t cap;
 } schedule;
 
-typedef std::unordered_map<std::string, schedule> oldRmMap;
+typedef std::unordered_map<std::string, schedule *> oldRmMap;

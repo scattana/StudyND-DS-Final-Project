@@ -1,0 +1,11 @@
+Hagerty_Cafe_Tables
+30
+North_End_Lounge
+22
+Midfield_Commons
+40
+Welcome_Desk_Lounge
+28
+Innovation_Lounge
+24
+
