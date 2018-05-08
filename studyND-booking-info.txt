@@ -1,9 +1,0 @@
-YOUR studyND BOOKING MADE AT HOUR: 7:00 PM
--------------------------------------------
-Name: 1 1
-Location: cushing room 217 (eg lounge)
-Time: 8:00 PM to 9:00 PM
-Number of people: 1
-Location capacity: 24
-
-

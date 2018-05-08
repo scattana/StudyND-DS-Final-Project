@@ -286,7 +286,7 @@ string returnRoom(size_t n, string temp){
 	ifstream ifs;
 	if(temp=="cushing") ifs.open((Root+"cushing.txt").c_str(), ifstream::in);
 	else if(temp=="fitzpatrick") ifs.open((Root+"fitzpatrick.txt").c_str(), ifstream::in);
-	else if(temp=="duncan student center") ifs.open((Root+"duncan.txt").c_str(), ifstream::in); 
+	else if(temp=="dustu") ifs.open((Root+"duncan.txt").c_str(), ifstream::in); 
 	else if(temp=="stinson-remick") ifs.open((Root+"stinson.txt").c_str(), ifstream::in);
 	else{
 		cout << "Building " << temp << " was not found. Leaving studyND" << endl;

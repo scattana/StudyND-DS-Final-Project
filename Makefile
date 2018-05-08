@@ -3,7 +3,6 @@ CFLAGS=			-std=c++11 -fPIC -g
 TARGETS=		studyND
 
 
-
 all: 			studyND
 
 
