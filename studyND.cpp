@@ -408,7 +408,7 @@ int main(int argc, char* argv[]){
 		else{							// key was found
 			(*myMap)[b.building]->book(b);
 		}
-
+ 
 		save(myMap);
 		for(auto c = myMap->begin(); c != myMap->end(); c++) delete c->second;
 		delete myMap;
