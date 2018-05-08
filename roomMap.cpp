@@ -69,6 +69,14 @@ RoomMap::RoomMap(oldRmMap oldMap, time_t age){
     table = nullptr;
     resize(DEFAULT_TABLE_SIZE);
 
+    struct stat temp;
+    if(stat("./data/schedule.txt", &temp) < 0) {
+        for(auto it = oldMap.begin(); it != oldMap.end(); it++) delete it->second;
+        return;
+    }
+    age = (time_t)temp.st_mtim.tv_sec;
+
+
     std::chrono::duration<int,std::ratio<60*60*24>> one_day (1);
     std::chrono::system_clock::time_point today = std::chrono::system_clock::now();
     time_t lastUpdate = std::chrono::system_clock::to_time_t (today);
@@ -178,6 +186,14 @@ void RoomMap::dump(std::ostream &os) {
             os << table[i].capacity << std::endl;
             table[i].times->dump(os);
 	}
+    }
+}
+
+void RoomMap::listRooms(){
+    for(size_t i=0; i<table_size; i++){
+        if(table[i] != NONE){
+            std::cout << table[i].roomNum << std::endl;
+        }
     }
 }
 

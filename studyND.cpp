@@ -286,7 +286,7 @@ string returnRoom(size_t n, string temp){
 	ifstream ifs;
 	if(temp=="cushing") ifs.open((Root+"cushing.txt").c_str(), ifstream::in);
 	else if(temp=="fitzpatrick") ifs.open((Root+"fitzpatrick.txt").c_str(), ifstream::in);
-	else if(temp=="duncan student center") ifs.open((Root+"duncan.txt").c_str(), ifstream::in); 
+	else if(temp=="dustu") ifs.open((Root+"duncan.txt").c_str(), ifstream::in); 
 	else if(temp=="stinson-remick") ifs.open((Root+"stinson.txt").c_str(), ifstream::in);
 	else{
 		cout << "Building " << temp << " was not found. Leaving studyND" << endl;
@@ -328,7 +328,7 @@ size_t get_capacity(string temp, size_t loc){
 
 unordered_map<string, RoomMap *>* load(){
 	struct stat st;
-	stat("/data/schedule.txt", &st);
+	stat("./data/schedule.txt", &st);
 	time_t writeTime = st.st_mtim.tv_sec;
 	ifstream fp;
 	fp.open("./data/schedule.txt");
@@ -374,6 +374,34 @@ bool save(unordered_map<string, RoomMap *> *curr) {
 	outFile.close();
 }
 
+int dispContents(unordered_map<string, RoomMap *> *myMap) {
+	cout << "Here are the buildings we currently have information for: \n";
+	for(auto it = myMap->begin(); it != myMap->end(); it++){
+		cout << it->first << endl;
+	}
+	cout << "Select one of the above to display more information on:\n";
+	string inBuild; cin >> inBuild;
+	while(myMap->find(inBuild) == myMap->end()) {
+		cout << "Error: invalid building. Try again!\n";
+		cin >> inBuild;
+	}
+
+	cout << "Here are the rooms we currently have reservation info for in that building:\n";
+	(*myMap)[inBuild]->listRooms();
+	cout << "Select one of these rooms to display information on:\n";
+	string inRoom; cin >> inRoom;
+	while((*myMap)[inBuild]->search(inRoom) == NONE){
+		cout << "Error: invalid room. Try again!\n";
+                cin >> inRoom;
+	}
+	cout << "Room: " << inRoom << endl;
+	cout << "Capacity: " << (*myMap)[inBuild]->search(inRoom).capacity << endl;
+	cout << "Schedule dump:\n";
+	(*myMap)[inBuild]->search(inRoom).times->dump(cout);
+	return EXIT_SUCCESS;
+}
+
+
 // -----------------------------------------------
 //               MAIN FUNCTION
 // -----------------------------------------------
@@ -385,7 +413,7 @@ int main(int argc, char* argv[]){
 	// -----------------------------------------
 	// now parse command line options
 	size_t hour;
-	bool booked = false;
+	bool booked = false; bool view = false;
 	// parse command line options
 	if(argc == 1) return usage(argv[0], 1);
 	if(strcmp(argv[1],"-h")==0) return usage(argv[0], 0);
@@ -395,7 +423,7 @@ int main(int argc, char* argv[]){
 		if(strcmp(argv[argind], "-n")==0){
 			booked = true;
 		}
-		else if(strcmp(argv[argind], "-v")==0) cout << "CALL viewBookings()" << endl;
+		else if(strcmp(argv[argind], "-v")==0) view = true;
 		else usage(argv[0], 1);	// improper usage; call "usage" with status 1
 	}
 	// if a booking is desired, make booking and output to file:
@@ -421,6 +449,10 @@ int main(int argc, char* argv[]){
 		save(myMap);
 		for(auto c = myMap->begin(); c != myMap->end(); c++) delete c->second;
 		delete myMap;
+	}
+	else if(view){
+		myMap = load();
+		return dispContents(myMap);
 	}
 
 	return EXIT_SUCCESS;
