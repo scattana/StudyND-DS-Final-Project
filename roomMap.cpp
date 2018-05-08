@@ -41,12 +41,10 @@ bool Room::operator != (const Room &r2) const { //Overloaded comparison operator
 
 // default constructor (use DEFAULT values)
 RoomMap::RoomMap(){
-        //std::cout << "In default constructor\n";
 	table_size = 0;
 	max_load_factor = DEFAULT_LOAD_FACTOR;
 	num_items = 0;
         table = nullptr;
-        //std::cout << "Right before resize\n";
 	resize(DEFAULT_TABLE_SIZE);
 }
 
@@ -101,21 +99,14 @@ RoomMap::RoomMap(oldRmMap oldMap, time_t age){
 
 // deconstructor
 RoomMap::~RoomMap(){
-    //std::cout << "In map deconstructor " << table_size << std::endl;
     for(size_t c=0; c<table_size; c++){
-        //std::cout << "Looping\n";
         if(table[c] != NONE) {
-            //std::cout << "Found an item:\n";
-            //std::cout << table[c].roomNum << std::endl;
             delete table[c].times;
-            //Room * test = &(table[c]);
-            //delete test;
         }
     }
     int temp = toDelete.size();
     for(int c=0; c<temp; c++) delete toDelete[c];
     delete[] table;
-    //std::cout << "Ran delete command\n";
 }
 
 size_t RoomMap::num_rooms(){
@@ -124,51 +115,34 @@ size_t RoomMap::num_rooms(){
 
 //Custom booking function- handles insertion as needed as well as booking
 bool RoomMap::book(Booking &entry) {
-    //std::cout << "In Booking\n";
     if(search(entry.location) == NONE) {
-        //std::cout << "Need to make a new room\n";
         List *NewList = new List;
         Room *NewRoom = new Room{entry.location, entry.capacity, NewList};
         toDelete.push_back(NewRoom);
-        //std::cout << "Made new room\n";
         insert(*NewRoom);
-        //std::cout << "About to finish if loop\n";
     }
-    
-    //std::cout << table[locate(entry.location)].roomNum << std::endl;
-    //table[locate(entry.location)].times.dump(std::cout);
-
-    //std::cout << "Found in bucket " << locate(entry.location) << std::endl;
-
     return table[locate(entry.location)].times->reserve(&entry);
-    //return table[locate(entry.location)].book(entry);    
 }
 
 //Pre-written insert function
 void RoomMap::insert(const Room &input) {
     double curr_load_factor = (double)num_items/(double)table_size;
-
     if(curr_load_factor >= max_load_factor){
 	resize(table_size*2);
     }
-    //std::cout << "In insert, before locate\n";
     size_t bucket = locate(input.roomNum);
     if(bucket == table_size){
-        //std::cout << "No empty buckets found\n";
 	resize(table_size*2); // if no empty buckets found
     }
     else if (table[bucket].roomNum != input.roomNum){
 	num_items++; // increment the number of UNIQUE items in the table
     }
     table[bucket] = input;
-    //std::cout << "Inserted in bucket " << bucket << std::endl;
 }
 
 //Pre-written search function
 const Room RoomMap::search(const std::string &key) {
-    //std::cout << "In search\n";
     size_t bucket = locate(key);
-    //std::cout << "Past locate\n";
     if(bucket >= table_size)
         return NONE;
     else if (table[bucket].roomNum == key)
@@ -219,21 +193,17 @@ size_t  RoomMap::locate(const std::string &key) {
 // called by "insert" when (1) no empty entries in the table, or (2) when
 // current load factor exceeds max load factor
 void RoomMap::resize(const size_t new_size) {
-    //std::cout << "Resizing table\n";
     auto old_table = table;
     auto old_size = table_size;
     table = new Room[new_size]();
     table_size = new_size;
-    //std::cout << "Made new table\n";
     for(size_t c=0; c<new_size; c++){
         table[c] = NONE;
     }
-    // copy old values from table to new table
     for(size_t i=0; i<old_size; i++){
 	if(old_table[i] != NONE) insert(old_table[i]);
     }
     if(old_table) delete[] old_table;
-    //std::cout << "Finished resize\n";
 }
 
 // vim: set sts=4 sw=4 ts=8 expandtab ft=cpp:
