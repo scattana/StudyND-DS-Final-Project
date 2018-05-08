@@ -3,7 +3,7 @@ import json
 FILE = "../data/schedule.json"
 BUILDINGS_PATH = "../data/"
 BUILDINGS = [["cushing.txt", "Cushing"], ["fitzpatrick.txt", "Fitzpatrick"], ["duncan.txt", "Duncan Student Center"], ["stinson.txt", "Stinson-Remick"]]
-OUT_PATH = "/tmp/input.txt"
+OUT_PATH = "../data/schedule.txt"
 write_file = open(OUT_PATH, "w")
 data = json.load(open(FILE))
 keys = {}

@@ -391,6 +391,7 @@ int main(int argc, char* argv[]){
 	}
 	// if a booking is desired, make booking and output to file:
 	if(booked){
+		myMap = load();
 		Booking b = newBooking(hour);
 		if(b.status != 0) return EXIT_FAILURE;
 
@@ -407,7 +408,7 @@ int main(int argc, char* argv[]){
 		else{							// key was found
 			(*myMap)[b.building]->book(b);
 		}
-
+ 
 		save(myMap);
 		for(auto c = myMap->begin(); c != myMap->end(); c++) delete c->second;
 		delete myMap;
