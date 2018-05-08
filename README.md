@@ -9,6 +9,9 @@ directory and run `make`. This will generate a `studyND` executable
 * To test program output and memory, run `make test`. This will execute a 
 shell script that checks valgrind for memory errors and checks sample inputs 
 against expected output
+* To remove the studyND executable, run `make clean`
+* To view usage instructions for studyND, run `studyND -h` and follow the 
+provided instructions
 
 
 
