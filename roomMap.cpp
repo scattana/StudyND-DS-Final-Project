@@ -189,6 +189,14 @@ void RoomMap::dump(std::ostream &os) {
     }
 }
 
+void RoomMap::listRooms(){
+    for(size_t i=0; i<table_size; i++){
+        if(table[i] != NONE){
+            std::cout << table[i].roomNum << std::endl;
+        }
+    }
+}
+
 size_t  RoomMap::locate(const std::string &key) {
     // hashing should take place here. If the given key has a non-empty
     // bucket, return that bucket. If the given key does not exist, return
