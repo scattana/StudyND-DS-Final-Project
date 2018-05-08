@@ -85,7 +85,7 @@ bool List::reserve(Booking *b){
 		for(size_t i = 0;i < b->book_len;i++){
 			curr->people += b->num_people;
 			for(size_t j = 0;j < b->num_people;j++)
-				curr->names = curr->names+b->f_name+" "+b->l_name+",";
+				curr->names = curr->names+b->f_name+"-"+b->l_name+",";
 			curr = curr->next;
 		}
 		return true;
@@ -97,6 +97,7 @@ bool List::reserve(Booking *b){
 }
 void List::dump(std::ostream &os){
 	for(Node *t = head;t != nullptr;t=t->next){
-		os << "- " << t->people << ':' << t->names << std::endl;
+		os << t->people << std::endl;
+		os << t->names << std::endl;
 	}
 }
